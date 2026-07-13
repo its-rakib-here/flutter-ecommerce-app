@@ -1,3 +1,4 @@
+import 'package:e_commerce/screens/auth_ui/sign_up_screen.dart';
 import 'package:e_commerce/utills/app_constant.dart';
 import 'package:e_commerce/widgets/auth_button.dart';
 import 'package:e_commerce/widgets/auth_text_field.dart';
@@ -21,16 +22,16 @@ class _LoginInScreenState extends State<LoginInScreen> {
     final size = MediaQuery.of(context).size;
     return KeyboardVisibilityBuilder(
       builder: (context, iskyeboardVisible) {
-        return SingleChildScrollView(
-          child: Scaffold(
-            backgroundColor: AppConstants.secondaryColor,
-            appBar: AppBar(
-              title: Text("Wellcome Back"),
-              centerTitle: true,
-              backgroundColor: AppConstants.primaryColor,
-              elevation: 0,
-            ),
-            body: Column(
+        return Scaffold(
+          backgroundColor: AppConstants.secondaryColor,
+          appBar: AppBar(
+            title: Text("Wellcome Back"),
+            centerTitle: true,
+            backgroundColor: AppConstants.primaryColor,
+            elevation: 0,
+          ),
+          body: SingleChildScrollView(
+            child: Column(
               children: [
                 iskyeboardVisible
                     ? Text("Please sign in with your credentials")
@@ -49,7 +50,7 @@ class _LoginInScreenState extends State<LoginInScreen> {
                   prefixIcon: Icons.lock_outline,
                   obscureText: true,
                 ),
-                SizedBox(height: size.height * 0.03),
+                SizedBox(height: size.height * 0.01),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
@@ -71,18 +72,35 @@ class _LoginInScreenState extends State<LoginInScreen> {
                 AuthButton(text: "Login", onPressed: () {}),
 
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      "Don't have an account?",
-                      style: TextStyle(
-                        color: AppConstants.textPrimary,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => SignUpScreen(),
+                          ),
+                        );
+                      },
+                      child: Text(
+                        "Don't have an account?",
+                        style: TextStyle(
+                          color: AppConstants.textPrimary,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => SignUpScreen(),
+                          ),
+                        );
+                      },
                       child: Text(
                         "Sign Up",
                         style: TextStyle(

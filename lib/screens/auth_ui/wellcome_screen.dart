@@ -1,13 +1,52 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lottie/lottie.dart';
 
+import '../../controllers/google_signIn_controller.dart';
 import '../../utills/app_constant.dart';
+import '../user_panel/main_screen.dart';
 
-class WellcomeScreen extends StatelessWidget {
+class WellcomeScreen extends ConsumerStatefulWidget {
   const WellcomeScreen({super.key});
 
   @override
+  ConsumerState<WellcomeScreen> createState() => _WellcomeScreenState();
+}
+
+class _WellcomeScreenState extends ConsumerState<WellcomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+
+    ref.listenManual(googleSignInProvider, (previous, next) {
+      next.whenOrNull(
+        data: (user) {
+          if (user != null) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => MainScreen()),
+            );
+          }
+        },
+        error: (error, stackTrace) {
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text(error.toString())));
+        },
+      );
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    ref.invalidate(googleSignInProvider);
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final authState = ref.watch(googleSignInProvider);
+
     final size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: AppConstants.primaryColor,
@@ -52,7 +91,9 @@ class WellcomeScreen extends StatelessWidget {
                     side: BorderSide(color: AppConstants.borderColor),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  ref.read(googleSignInProvider.notifier).signInWithGoogle();
+                },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
 

@@ -5,6 +5,7 @@ import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../utills/app_constant.dart';
+import 'login_in_screen.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -17,6 +18,8 @@ class _SignInScreenState extends State<SignUpScreen> {
   TextEditingController name = TextEditingController();
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
+  TextEditingController phone = TextEditingController();
+  TextEditingController city = TextEditingController();
 
   @override
   void dispose() {
@@ -38,13 +41,12 @@ class _SignInScreenState extends State<SignUpScreen> {
           ),
 
           body: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
             child: Column(
               children: [
                 isKeyboardVisible
-                    ? Text("Please sign in with your credentials")
+                    ? Text("Please sign up with your credentials")
                     : Lottie.asset("assets/images/Login.json"),
-
-                SizedBox(height: 20),
 
                 AuthTextField(
                   controller: name,
@@ -60,16 +62,72 @@ class _SignInScreenState extends State<SignUpScreen> {
                 ),
                 SizedBox(height: 15),
                 AuthTextField(
+                  controller: phone,
+                  hintText: "Enter your Number",
+                  prefixIcon: Icons.phone,
+                  obscureText: true,
+                ),
+                SizedBox(height: 15),
+                AuthTextField(
+                  controller: city,
+                  hintText: "Enter your City",
+                  prefixIcon: Icons.lock_outline,
+                  obscureText: true,
+                ),
+
+                SizedBox(height: 15),
+                AuthTextField(
                   controller: password,
                   hintText: "Enter your Password",
                   prefixIcon: Icons.lock_outline,
                   obscureText: true,
                 ),
-                SizedBox(height: 15),
 
                 SizedBox(height: 15),
 
                 AuthButton(text: "Create Account", onPressed: () {}),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => LoginInScreen(),
+                          ),
+                        );
+                      },
+                      child: Text(
+                        "Already have an account?",
+                        style: TextStyle(
+                          color: AppConstants.textPrimary,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => LoginInScreen(),
+                          ),
+                        );
+                      },
+                      child: Text(
+                        "Sign In",
+                        style: TextStyle(
+                          color: AppConstants.textPrimary,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
