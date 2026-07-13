@@ -1,4 +1,4 @@
-import 'package:e_commerce/screens/auth_ui/sign_in_screen.dart';
+import 'package:e_commerce/screens/auth_ui/login_in_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
         colorScheme: .fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: SignInScreen(),
+      home: LoginInScreen(),
     );
   }
 }
