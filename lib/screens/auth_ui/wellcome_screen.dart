@@ -29,9 +29,7 @@ class _WellcomeScreenState extends ConsumerState<WellcomeScreen> {
           }
         },
         error: (error, stackTrace) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text(error.toString())));
+          debugPrint("Google Sign In Error: $error");
         },
       );
     });
