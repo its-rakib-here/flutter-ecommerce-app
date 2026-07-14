@@ -12,7 +12,20 @@
           "package_name": "com.example.e_commerce"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "1071534318503-krhq61cqna1tnkpkhg9tisl3qhef9k3o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.e_commerce",
+            "certificate_hash": "bbebd57474e28ab6957596558d8e92db1350464f"
+          }
+        },
+        {
+          "client_id": "1071534318503-564smi5jld6a9ginc1fjmhltj470dbid.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyClsJNsmHdBH2lkrry7pzDSHRMP3IPQsd0"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1071534318503-564smi5jld6a9ginc1fjmhltj470dbid.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1071534318503-794bo3pp30cvsl702t86pn9jepvskmo2.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.eCommerce"
+              }
+            }
+          ]
         }
       }
     }

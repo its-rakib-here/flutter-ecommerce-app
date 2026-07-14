@@ -24,27 +24,44 @@ class GoogleSignInController extends AsyncNotifier<UserModel?> {
     state = const AsyncLoading();
 
     try {
-      final GoogleSignIn googleSignIn = GoogleSignIn.instance;
+      final googleSignIn = GoogleSignIn.instance;
 
-      await googleSignIn.initialize();
+      await googleSignIn.initialize(
+        serverClientId:
+            '1071534318503-564smi5jld6a9ginc1fjmhltj470dbid.apps.googleusercontent.com',
+      );
 
-      // Start sign in
+      print("Google SignIn Initialized");
+
       final GoogleSignInAccount googleUser = await googleSignIn.authenticate();
 
+      print("Selected Email: ${googleUser.email}");
+
       final GoogleSignInAuthentication googleAuth = googleUser.authentication;
+
+      print("ID Token: ${googleAuth.idToken}");
+      // print("Access Token: ${googleAuth.accessToken}");
 
       final credential = GoogleAuthProvider.credential(
         idToken: googleAuth.idToken,
       );
 
-      // Firebase login
-      final userCredential = await _auth.signInWithCredential(credential);
+      print("Signing into Firebase...");
 
-      final user = userCredential.user;
+      final UserCredential userCredential = await _auth.signInWithCredential(
+        credential,
+      );
+
+      print("Firebase Login Success");
+
+      final User? user = userCredential.user;
 
       if (user == null) {
-        throw Exception("User is null");
+        throw Exception("Firebase returned null user");
       }
+
+      print("UID: ${user.uid}");
+      print("Email: ${user.email}");
 
       final userModel = UserModel(
         uId: user.uid,
@@ -69,10 +86,19 @@ class GoogleSignInController extends AsyncNotifier<UserModel?> {
             .collection("users")
             .doc(user.uid)
             .set(userModel.toMap());
+
+        print("User saved to Firestore");
+      } else {
+        print("User already exists");
       }
 
       state = AsyncData(userModel);
     } catch (e, stack) {
+      print("================ ERROR ================");
+      print(e);
+      print(stack);
+      print("======================================");
+
       state = AsyncError(e, stack);
     }
   }
