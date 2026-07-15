@@ -1,0 +1,68 @@
+import 'dart:async';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:e_commerce/models/user_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+final signUpProvider = AsyncNotifierProvider<SignUpController, UserModel?>(
+  SignUpController.new,
+);
+
+class SignUpController extends AsyncNotifier<UserModel?> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  Future<UserCredential?> signUPWithEmailAndPassword(
+    String email,
+    String password,
+    String username,
+    String phone,
+    String city,
+    String userDeviceToken,
+  ) async {
+    state = const AsyncLoading();
+    try {
+      UserCredential userCredential = await _auth
+          .createUserWithEmailAndPassword(email: email, password: password);
+
+      await userCredential.user!.sendEmailVerification();
+
+      UserModel userModel = UserModel(
+        uId: userCredential.user!.uid,
+        username: username,
+        email: email,
+        phone: phone,
+        userImg: "",
+        userDeviceToken: userDeviceToken,
+        country: "",
+        userAddress: "",
+        street: "",
+        city: city,
+        isAdmin: false,
+        isActive: true,
+        createdOn: DateTime.now(),
+      );
+
+      await _firestore
+          .collection('users')
+          .doc(userCredential.user!.uid)
+          .set(userModel.toMap());
+
+      state = AsyncData(userModel);
+    } on FirebaseAuthException catch (e, stack) {
+      state = AsyncError(e, stack);
+
+      print("================ ERROR ================");
+      print(e);
+      print("======================================");
+      return null;
+    }
+  }
+
+  @override
+  FutureOr<UserModel?> build() {
+    // TODO: implement build
+    return null;
+  }
+}

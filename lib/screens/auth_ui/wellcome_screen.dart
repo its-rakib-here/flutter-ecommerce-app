@@ -5,6 +5,7 @@ import 'package:lottie/lottie.dart';
 import '../../controllers/google_signIn_controller.dart';
 import '../../utills/app_constant.dart';
 import '../user_panel/main_screen.dart';
+import 'login_in_screen.dart';
 
 class WellcomeScreen extends ConsumerStatefulWidget {
   const WellcomeScreen({super.key});
@@ -79,38 +80,46 @@ class _WellcomeScreenState extends ConsumerState<WellcomeScreen> {
             SizedBox(
               width: size.width * 0.8,
               height: 50,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.white,
-                  foregroundColor: AppConstants.textPrimary,
-                  elevation: 0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    side: BorderSide(color: AppConstants.borderColor),
-                  ),
-                ),
-                onPressed: () {
-                  ref.read(googleSignInProvider.notifier).signInWithGoogle();
-                },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+              child: SizedBox(
+                width: size.width * 0.8,
+                height: 50,
+                child: authState.isLoading
+                    ? const Center(child: CircularProgressIndicator())
+                    : ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          foregroundColor: AppConstants.textPrimary,
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            side: BorderSide(color: AppConstants.borderColor),
+                          ),
+                        ),
+                        onPressed: () {
+                          ref
+                              .read(googleSignInProvider.notifier)
+                              .signInWithGoogle();
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
 
-                  children: [
-                    Image.asset(
-                      "assets/images/google.png",
-                      width: 22,
-                      height: 22,
-                    ),
-                    const SizedBox(width: 10),
-                    const Text(
-                      "Sign in with Google",
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
+                          children: [
+                            Image.asset(
+                              "assets/images/google.png",
+                              width: 22,
+                              height: 22,
+                            ),
+                            const SizedBox(width: 10),
+                            const Text(
+                              "Sign in with Google",
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
-                ),
               ),
             ),
             SizedBox(height: 20),
@@ -127,7 +136,12 @@ class _WellcomeScreenState extends ConsumerState<WellcomeScreen> {
                     side: BorderSide(color: AppConstants.borderColor),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginInScreen()),
+                  );
+                },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
