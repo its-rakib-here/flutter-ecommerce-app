@@ -3,60 +3,57 @@ import 'package:e_commerce/screens/auth_ui/sign_up_screen.dart';
 import 'package:e_commerce/utills/app_constant.dart';
 import 'package:e_commerce/widgets/auth_button.dart';
 import 'package:e_commerce/widgets/auth_text_field.dart';
+import 'package:e_commerce/widgets/custom_snacbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lottie/lottie.dart';
 
-import '../user_panel/main_screen.dart';
-import 'forgot_password_screen.dart';
+import '../../controllers/forgot_password_controller.dart';
 
-class LoginInScreen extends ConsumerStatefulWidget {
-  const LoginInScreen({super.key});
+class ForgotPassowrd extends ConsumerStatefulWidget {
+  const ForgotPassowrd({super.key});
 
   @override
-  ConsumerState<LoginInScreen> createState() => _LoginInScreenState();
+  ConsumerState<ForgotPassowrd> createState() => _LoginInScreenState();
 }
 
-class _LoginInScreenState extends ConsumerState<LoginInScreen> {
+class _LoginInScreenState extends ConsumerState<ForgotPassowrd> {
   TextEditingController email = TextEditingController();
-  TextEditingController password = TextEditingController();
 
+  @override
   @override
   void initState() {
     super.initState();
 
-    ref.listenManual(signinProvider, (previous, next) {
+    ref.listenManual(forgotPasswordProvider, (previous, next) {
       next.whenOrNull(
-        data: (user) {
-          if (user != null && mounted) {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (_) => const MainScreen()),
-            );
-          }
+        data: (_) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text("Password reset email has been sent."),
+            ),
+          );
+
+          Navigator.pop(context);
         },
-        error: (error, stackTrace) {
+
+        error: (error, stack) {
           String message = "Something went wrong";
 
           if (error is FirebaseAuthException) {
             switch (error.code) {
-              case "email-not-verified":
-                message = "Please verify your email before logging in.";
-                break;
-
-              case "wrong-password":
-              case "invalid-credential":
-                message = "Invalid email or password.";
-                break;
-
               case "user-not-found":
                 message = "No account found with this email.";
                 break;
 
+              case "invalid-email":
+                message = "Please enter a valid email.";
+                break;
+
               default:
-                message = error.message ?? "Login failed";
+                message = error.message ?? message;
             }
           }
 
@@ -96,59 +93,25 @@ class _LoginInScreenState extends ConsumerState<LoginInScreen> {
                   prefixIcon: Icons.email_outlined,
                 ),
                 SizedBox(height: size.height * 0.03),
-                AuthTextField(
-                  controller: password,
-                  hintText: "Enter Your Password",
-                  prefixIcon: Icons.lock_outline,
-                  obscureText: true,
-                ),
-                SizedBox(height: size.height * 0.01),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ForgotPassowrd(),
-                          ),
-                        );
-                      },
-                      child: Text(
-                        "Forgot password",
-                        style: TextStyle(
-                          color: AppConstants.textPrimary,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
 
                 SizedBox(height: size.height * 0.01),
+
+                SizedBox(height: size.height * 0.01),
+
                 AuthButton(
-                  text: "Login",
-                  onPressed: signInState.isLoading
-                      ? () {}
-                      : () {
-                          if (email.text.trim().isEmpty ||
-                              password.text.trim().isEmpty) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text("Please fill all the fields"),
-                              ),
-                            );
-                            return;
-                          }
-                          ref
-                              .read(signinProvider.notifier)
-                              .signInWIthEmailAndPassword(
-                                email.text.trim(),
-                                password.text.trim(),
-                              );
-                        },
+                  text: "Forgot ",
+                  onPressed: () {
+                    if (email == null) {
+                      CustomSnackBar.showWarning(
+                        context,
+                        "Please fill all the fields.",
+                      );
+                    } else {
+                      ref
+                          .read(forgotPasswordProvider.notifier)
+                          .resetPassword(email.text.trim());
+                    }
+                  },
                 ),
 
                 Row(
