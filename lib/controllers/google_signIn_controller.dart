@@ -3,8 +3,11 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce/models/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+
+import '../services/notification_service.dart';
 
 final googleSignInProvider =
     AsyncNotifierProvider<GoogleSignInController, UserModel?>(
@@ -25,6 +28,8 @@ class GoogleSignInController extends AsyncNotifier<UserModel?> {
 
     try {
       final googleSignIn = GoogleSignIn.instance;
+      final deviceToken = await NotificationService.getDeviceToken();
+      debugPrint("device token:${deviceToken}");
 
       await googleSignIn.initialize(
         serverClientId:
@@ -69,7 +74,7 @@ class GoogleSignInController extends AsyncNotifier<UserModel?> {
         email: user.email ?? "",
         phone: user.phoneNumber ?? "",
         userImg: user.photoURL ?? "",
-        userDeviceToken: "",
+        userDeviceToken: deviceToken,
         country: "",
         userAddress: "",
         street: "",
@@ -89,7 +94,11 @@ class GoogleSignInController extends AsyncNotifier<UserModel?> {
 
         print("User saved to Firestore");
       } else {
-        print("User already exists");
+        await _firestore.collection("users").doc(user.uid).update({
+          "userDeviceToken": deviceToken,
+        });
+
+        print("Device token updated");
       }
 
       state = AsyncData(userModel);

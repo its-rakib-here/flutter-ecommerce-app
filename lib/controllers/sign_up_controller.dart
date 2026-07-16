@@ -3,8 +3,11 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce/models/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../services/notification_service.dart';
 
 final signUpProvider = AsyncNotifierProvider<SignUpController, UserModel?>(
   SignUpController.new,
@@ -26,6 +29,9 @@ class SignUpController extends AsyncNotifier<UserModel?> {
     EasyLoading.show(status: "Signing in...");
 
     try {
+      final deviceToken = await NotificationService.getDeviceToken();
+      debugPrint("device token:${deviceToken}");
+
       UserCredential userCredential = await _auth
           .createUserWithEmailAndPassword(email: email, password: password);
 
@@ -37,7 +43,7 @@ class SignUpController extends AsyncNotifier<UserModel?> {
         email: email,
         phone: phone,
         userImg: "",
-        userDeviceToken: userDeviceToken,
+        userDeviceToken: deviceToken,
         country: "",
         userAddress: "",
         street: "",

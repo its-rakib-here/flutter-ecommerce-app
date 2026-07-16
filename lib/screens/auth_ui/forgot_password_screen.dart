@@ -1,5 +1,4 @@
 import 'package:e_commerce/controllers/sign_in_controller.dart';
-import 'package:e_commerce/screens/auth_ui/sign_up_screen.dart';
 import 'package:e_commerce/utills/app_constant.dart';
 import 'package:e_commerce/widgets/auth_button.dart';
 import 'package:e_commerce/widgets/auth_text_field.dart';
@@ -94,12 +93,8 @@ class _LoginInScreenState extends ConsumerState<ForgotPassowrd> {
                 ),
                 SizedBox(height: size.height * 0.03),
 
-                SizedBox(height: size.height * 0.01),
-
-                SizedBox(height: size.height * 0.01),
-
                 AuthButton(
-                  text: "Forgot ",
+                  text: " Forgot ",
                   onPressed: () {
                     if (email == null) {
                       CustomSnackBar.showWarning(
@@ -112,48 +107,6 @@ class _LoginInScreenState extends ConsumerState<ForgotPassowrd> {
                           .resetPassword(email.text.trim());
                     }
                   },
-                ),
-
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => SignUpScreen(),
-                          ),
-                        );
-                      },
-                      child: Text(
-                        "Don't have an account?",
-                        style: TextStyle(
-                          color: AppConstants.textPrimary,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => SignUpScreen(),
-                          ),
-                        );
-                      },
-                      child: Text(
-                        "Sign Up",
-                        style: TextStyle(
-                          color: AppConstants.textPrimary,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ],
                 ),
               ],
             ),

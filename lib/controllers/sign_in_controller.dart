@@ -7,6 +7,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../services/notification_service.dart';
+
 final signinProvider = AsyncNotifierProvider<SignInController, UserModel?>(
   SignInController.new,
 );
@@ -21,6 +23,7 @@ class SignInController extends AsyncNotifier<UserModel?> {
   ) async {
     state = const AsyncLoading();
     EasyLoading.show(status: "Signing in...");
+    final deviceToken = await NotificationService.getDeviceToken();
 
     try {
       final userCredential = await _auth.signInWithEmailAndPassword(
