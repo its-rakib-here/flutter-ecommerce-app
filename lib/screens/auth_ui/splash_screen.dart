@@ -51,7 +51,7 @@ class _SplashScreenState extends State<SplashScreen> {
               width: size.width,
               alignment: Alignment.center,
               child: Text(
-                AppConstants.appCreatedBy,
+                "Created by: Rakibul Islam Rakib",
                 style: TextStyle(
                   color: AppConstants.textPrimary,
                   fontSize: 16.0,
