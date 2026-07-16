@@ -122,6 +122,7 @@ class _WellcomeScreenState extends ConsumerState<WellcomeScreen> {
                       ),
               ),
             ),
+
             SizedBox(height: 20),
             SizedBox(
               width: size.width * 0.8,

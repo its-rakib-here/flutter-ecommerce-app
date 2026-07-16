@@ -17,6 +17,8 @@ class SignInController extends AsyncNotifier<UserModel?> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+  // final firebaseUser =FirebaseAuth.instance.currentUser;
+
   Future<UserCredential?> signInWIthEmailAndPassword(
     String email,
     String password,
@@ -33,11 +35,9 @@ class SignInController extends AsyncNotifier<UserModel?> {
 
       final user = userCredential.user!;
 
-      // সর্বশেষ verification status আনো
       await user.reload();
       final refreshedUser = FirebaseAuth.instance.currentUser!;
 
-      // Email verify না হলে login করতে দিও না
       if (!refreshedUser.emailVerified) {
         await _auth.signOut();
 
@@ -46,6 +46,9 @@ class SignInController extends AsyncNotifier<UserModel?> {
           message: "Please verify your email first.",
         );
       }
+      await _firestore.collection("users").doc(refreshedUser.uid).update({
+        "deviceToken": deviceToken,
+      });
 
       final doc = await _firestore
           .collection("users")
@@ -71,8 +74,22 @@ class SignInController extends AsyncNotifier<UserModel?> {
   }
 
   @override
-  FutureOr<UserModel?> build() {
-    // TODO: implement build
-    return null;
+  Future<UserModel?> build() async {
+    final firebaseUser = FirebaseAuth.instance.currentUser;
+
+    if (firebaseUser == null) {
+      return null;
+    }
+
+    final doc = await _firestore
+        .collection("users")
+        .doc(firebaseUser.uid)
+        .get();
+
+    if (!doc.exists) {
+      return null;
+    }
+
+    return UserModel.fromMap(doc.data()!);
   }
 }

@@ -17,16 +17,14 @@ class SignUpController extends AsyncNotifier<UserModel?> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  Future<UserCredential?> signUPWithEmailAndPassword(
-    String email,
-    String password,
-    String username,
-    String phone,
-    String city,
-    String userDeviceToken,
-  ) async {
+  Future<UserCredential?> signUPWithEmailAndPassword(String email,
+      String password,
+      String username,
+      String phone,
+      String city,
+      String userDeviceToken,) async {
     state = const AsyncLoading();
-    EasyLoading.show(status: "Signing in...");
+    EasyLoading.show(status: "Signing up...");
 
     try {
       final deviceToken = await NotificationService.getDeviceToken();

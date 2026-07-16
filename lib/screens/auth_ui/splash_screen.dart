@@ -1,7 +1,6 @@
 import 'dart:async';
 
-import 'package:e_commerce/screens/auth_ui/wellcome_screen.dart';
-import 'package:e_commerce/screens/user_panel/main_screen.dart';
+import 'package:e_commerce/screens/auth_ui/auth_gate.dart';
 import 'package:e_commerce/utills/app_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
@@ -16,12 +15,13 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
+    // User? user = FirebaseAuth.instance.currentUser;
     super.initState();
 
-    Timer(Duration(seconds: 10), () {
+    Timer(Duration(seconds: 5), () {
       Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (context) => WellcomeScreen()),
+        MaterialPageRoute(builder: (context) => AuthGate()),
         (route) => false,
       );
     });

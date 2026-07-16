@@ -9,7 +9,7 @@ import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lottie/lottie.dart';
 
-import '../user_panel/main_screen.dart';
+import 'auth_gate.dart';
 import 'forgot_password_screen.dart';
 
 class LoginInScreen extends ConsumerStatefulWidget {
@@ -33,7 +33,7 @@ class _LoginInScreenState extends ConsumerState<LoginInScreen> {
           if (user != null && mounted) {
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (_) => const MainScreen()),
+              MaterialPageRoute(builder: (_) => const AuthGate()),
             );
           }
         },
