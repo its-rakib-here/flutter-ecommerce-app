@@ -15,7 +15,7 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
-
+  final notificationCount = 5;
   final List<Widget> _pages = const [
     HomeScreen(),
     FavouriteScreen(),
@@ -59,10 +59,44 @@ class _MainScreenState extends State<MainScreen> {
         ),
 
         actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.notifications_none_rounded),
+          Stack(
+            clipBehavior: Clip.none,
+            children: [
+              IconButton(
+                onPressed: () {
+                  // Navigate to Notification Screen
+                },
+                icon: const Icon(
+                  Icons.notifications_none_rounded,
+                  color: AppConstants.textPrimary,
+                ),
+              ),
+
+              Positioned(
+                right: 8,
+                top: 8,
+                child: Container(
+                  width: 18,
+                  height: 18,
+                  decoration: const BoxDecoration(
+                    color: Colors.red,
+                    shape: BoxShape.circle,
+                  ),
+                  alignment: Alignment.center,
+                  child: const Text(
+                    "2",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 10,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
+
+          const SizedBox(width: 8),
         ],
       ),
 
