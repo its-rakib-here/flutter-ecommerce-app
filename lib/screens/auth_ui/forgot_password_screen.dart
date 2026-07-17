@@ -71,7 +71,7 @@ class _LoginInScreenState extends ConsumerState<ForgotPassowrd> {
     return KeyboardVisibilityBuilder(
       builder: (context, iskyeboardVisible) {
         return Scaffold(
-          backgroundColor: AppConstants.secondaryColor,
+          backgroundColor: AppConstants.textPrimary,
           appBar: AppBar(
             title: Text("Wellcome Back"),
             centerTitle: true,

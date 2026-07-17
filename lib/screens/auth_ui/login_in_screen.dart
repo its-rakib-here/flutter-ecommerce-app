@@ -75,7 +75,7 @@ class _LoginInScreenState extends ConsumerState<LoginInScreen> {
     return KeyboardVisibilityBuilder(
       builder: (context, iskyeboardVisible) {
         return Scaffold(
-          backgroundColor: AppConstants.secondaryColor,
+          backgroundColor: AppConstants.primaryColor,
           appBar: AppBar(
             title: Text("Wellcome Back"),
             centerTitle: true,

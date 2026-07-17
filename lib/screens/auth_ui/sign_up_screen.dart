@@ -91,7 +91,7 @@ class _SignInScreenState extends ConsumerState<SignUpScreen> {
     return KeyboardVisibilityBuilder(
       builder: (context, isKeyboardVisible) {
         return Scaffold(
-          backgroundColor: AppConstants.secondaryColor,
+          backgroundColor: AppConstants.backgroundColor,
           appBar: AppBar(
             backgroundColor: AppConstants.primaryColor,
             title: Text("Sign In "),
@@ -220,7 +220,7 @@ class _SignInScreenState extends ConsumerState<SignUpScreen> {
                       Container(
                         width: double.infinity,
                         height: double.infinity,
-                        color: AppConstants.secondaryColor,
+                        color: AppConstants.successColor,
                         child: Center(
                           child: Lottie.asset("assets/images/loading.json"),
                         ),
