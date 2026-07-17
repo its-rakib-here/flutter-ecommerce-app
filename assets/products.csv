@@ -1,0 +1,17 @@
+name,description,price,discountPrice,categoryId,imageUrl,stock,rating,reviewCount,isFeatured,isActive
+Premium Cotton T-Shirt,Premium quality cotton t-shirt for men.,799,699,OOcWCMIT4dQZsuxJzqwh,https://unsplash.com/photos/two-t-shirts-black-and-light-green-with-cotton-sprigs-EFCpLBQbxIU,25,4.8,120,TRUE,TRUE
+Oversized T-Shirt,Comfortable oversized t-shirt.,999,899,OOcWCMIT4dQZsuxJzqwh,https://unsplash.com/photos/man-with-beard-touching-his-chin-thoughtfully-RfL7v_g5Fbs,18,4.7,85,TRUE,TRUE
+Casual Shirt,Slim fit casual shirt.,1299,1099,OOcWCMIT4dQZsuxJzqwh,https://unsplash.com/photos/a-blue-shirt-hanging-on-a-white-wall-vcTKFYNZop4,15,4.6,60,FALSE,TRUE
+Denim Jeans,Blue slim-fit denim jeans.,1899,1699,OOcWCMIT4dQZsuxJzqwh,https://unsplash.com/photos/a-pair-of-blue-jeans-on-a-white-background-9yoXrG6Er_g,12,4.8,92,TRUE,TRUE
+Floral Dress,Elegant floral dress.,1599,1399,ZUjtWKV9ErEj3lq11aIq,https://unsplash.com/photos/woman-in-black-white-and-red-floral-dress-standing-on-brown-soil-2ZXVU3BJzN4,14,4.9,140,TRUE,TRUE
+Women's Hoodie,Soft fleece hoodie.,1499,1299,ZUjtWKV9ErEj3lq11aIq,https://unsplash.com/photos/a-woman-standing-in-front-of-a-wall-with-graffiti-1i9K55ni5Dk,20,4.7,78,FALSE,TRUE
+Crop Top,Stylish crop top.,899,799,ZUjtWKV9ErEj3lq11aIq,https://your-image-urhttps://unsplash.com/photos/woman-in-red-long-sleeve-dress-sitting-on-gray-concrete-bench-during-daytime-6XZWrSBo5o4l-7.jpg,30,4.5,55,TRUE,TRUE
+Wide Leg Pants,Comfortable wide-leg pants.,1399,1199,ZUjtWKV9ErEj3lq11aIq,https://unsplash.com/photos/a-man-and-a-woman-standing-next-to-each-other-z1ikAf_CIEA,16,4.6,70,FALSE,TRUE
+Kids T-Shirt,Soft cotton kids t-shirt.,599,499,wQuAUN57ODtNZkGFRzO2,https://unsplash.com/photos/a-young-child-with-curly-hair-is-smiling-O5fI2B0ucWE,35,4.8,64,TRUE,TRUE
+Kids Hoodie,Warm hoodie for kids.,999,899,wQuAUN57ODtNZkGFRzO2,https://unsplash.com/photos/boy-in-yellow-hoodie-covering-his-face-MJO4z7z-uQY,20,4.7,40,FALSE,TRUE
+Kids Jeans,Comfortable kids jeans.,899,799,wQuAUN57ODtNZkGFRzO2,https://unsplash.com/photos/a-stack-of-jeans-sitting-on-top-of-each-other-aWLTXw6kbDw,18,4.6,32,FALSE,TRUE
+Kids Sneakers,Lightweight sneakers for kids.,1299,1099,wQuAUN57ODtNZkGFRzO2,https://unsplash.com/photos/a-colorful-sneaker-is-displayed-outdoors-lLm23bnpTFc,15,4.8,58,TRUE,TRUE
+Running Shoes,Lightweight running shoes.,2499,2199,hiKurOma8Xc22XzPqRt7,https://unsplash.com/photos/unpaired-red-nike-sneaker-164_6wVEHfI,22,4.9,170,TRUE,TRUE
+Casual Sneakers,Everyday casual sneakers.,2199,1999,hiKurOma8Xc22XzPqRt7,https://unsplash.com/photos/pair-of-white-and-orange-athletic-shoes-on-white-box-dwKiHoqqxk8,19,4.8,110,TRUE,TRUE
+Leather Loafers,Premium leather loafers.,2799,2499,hiKurOma8Xc22XzPqRt7,https://unsplash.com/photos/a-pair-of-brown-leather-shoes-5_zKOE-kPkw,10,4.7,48,FALSE,TRUE
+Sports Sandals,Comfortable sports sandals.,1499,1299,hiKurOma8Xc22XzPqRt7,https://unsplash.com/photos/colorful-sandals-are-worn-with-matching-socks-0LyW3nbUUq0,28,4.5,36,FALSE,TRUE
