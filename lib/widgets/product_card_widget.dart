@@ -57,7 +57,7 @@ class ProductCardWidget extends StatelessWidget {
             /// IMAGE SECTION
             ///==========================
             Expanded(
-              flex: 7,
+              flex: 5,
               child: Stack(
                 children: [
                   Hero(
@@ -71,7 +71,7 @@ class ProductCardWidget extends StatelessWidget {
                         ),
                       ),
                       child: Padding(
-                        padding: EdgeInsets.all(size.width * .03),
+                        padding: EdgeInsets.all(size.width * .01),
                         child: ClipRRect(
                           borderRadius: BorderRadius.vertical(
                             top: Radius.circular(size.width * .05),
@@ -139,26 +139,29 @@ class ProductCardWidget extends StatelessWidget {
             /// DETAILS SECTION
             ///==========================
             Expanded(
-              flex: 4,
+              flex: 5,
               child: Padding(
                 padding: EdgeInsets.symmetric(
-                  horizontal: size.width * .03,
-                  vertical: size.height * .010,
+                  horizontal: size.width * .02,
+                  vertical: size.height * .01,
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      product.name,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        fontSize: size.width * .037,
-                        fontWeight: FontWeight.w600,
+                    SizedBox(
+                      height: 40,
+                      child: Text(
+                        product.name,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: size.width * .037,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ),
 
-                    SizedBox(height: size.height * .005),
+                    SizedBox(height: size.height * .002),
 
                     Row(
                       children: [
@@ -168,7 +171,7 @@ class ProductCardWidget extends StatelessWidget {
                           size: size.width * .042,
                         ),
 
-                        SizedBox(width: size.width * .01),
+                        SizedBox(width: size.width * .02),
 
                         Text(
                           product.rating.toStringAsFixed(1),
@@ -323,7 +326,7 @@ class _PriceSection extends StatelessWidget {
               child: Icon(
                 Icons.add_shopping_cart_rounded,
                 color: Colors.white,
-                size: size.width * .048,
+                size: size.width * .045,
               ),
             ),
           ),

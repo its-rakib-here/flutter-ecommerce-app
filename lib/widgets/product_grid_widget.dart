@@ -26,19 +26,22 @@ class ProductGridWidget extends StatelessWidget {
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       padding: EdgeInsets.symmetric(
-        horizontal: size.width * .04,
-        vertical: size.height * .015,
+        horizontal: size.width * .001,
+        vertical: size.height * .02,
       ),
       itemCount: products.length,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
 
-        crossAxisSpacing: size.width * .035,
-
-        mainAxisSpacing: size.height * .02,
+        // crossAxisSpacing: size.width * .035,
+        //
+        // mainAxisSpacing: size.height * .03,
+        crossAxisSpacing: 14,
+        mainAxisSpacing: 16,
+        mainAxisExtent: 320,
 
         /// Premium Fashion Card
-        childAspectRatio: .63,
+        // childAspectRatio: .65,
       ),
       itemBuilder: (context, index) {
         final product = products[index];

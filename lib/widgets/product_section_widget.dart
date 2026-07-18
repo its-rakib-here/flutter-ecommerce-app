@@ -63,7 +63,7 @@ class ProductSectionWidget extends ConsumerWidget {
 
           productsAsync.when(
             loading: () => SizedBox(
-              height: size.height * .35,
+              height: size.height * .30,
               child: const Center(child: CircularProgressIndicator()),
             ),
 
