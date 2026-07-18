@@ -18,7 +18,7 @@ class _SplashScreenState extends State<SplashScreen> {
     // User? user = FirebaseAuth.instance.currentUser;
     super.initState();
 
-    Timer(Duration(seconds: 3), () {
+    Timer(Duration(seconds: 2), () {
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => AuthGate()),

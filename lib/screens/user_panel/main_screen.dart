@@ -39,16 +39,26 @@ class _MainScreenState extends State<MainScreen> {
                 color: AppConstants.primaryLight,
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: const Icon(
-                Icons.shopping_bag_outlined,
-                color: AppConstants.primaryColor,
+              // child: const Icon(
+              //   Icons.shopping_bag_outlined,
+              //   color: AppConstants.primaryColor,
+              // ),
+              child: CircleAvatar(
+                radius: 15,
+                child: ClipOval(
+                  child: Image.asset(
+                    "assets/images/apps_icon.png",
+                    width: 30,
+                    height: 30,
+                    fit: BoxFit.cover,
+                  ),
+                ),
               ),
             ),
-
             const SizedBox(width: 12),
 
             const Text(
-              "E-Commerce",
+              "QuickCart",
               style: TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,

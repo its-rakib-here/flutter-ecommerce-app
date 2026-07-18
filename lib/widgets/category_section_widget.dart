@@ -1,3 +1,4 @@
+import 'package:e_commerce/screens/user_panel/all_category_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -25,7 +26,16 @@ class CategorySectionWidget extends ConsumerWidget {
           HeadinWidgets(
             headingTitle: "Categories",
             buttonText: "See More",
-            onTap: onSeeMore ?? () {},
+            onTap:
+                onSeeMore ??
+                () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => AllCategoryScreen(),
+                    ),
+                  );
+                },
           ),
 
           SizedBox(height: size.height * .01),

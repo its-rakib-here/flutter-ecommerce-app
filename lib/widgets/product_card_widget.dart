@@ -57,7 +57,7 @@ class ProductCardWidget extends StatelessWidget {
             /// IMAGE SECTION
             ///==========================
             Expanded(
-              flex: 5,
+              // flex: 6,
               child: Stack(
                 children: [
                   Hero(
@@ -76,17 +76,20 @@ class ProductCardWidget extends StatelessWidget {
                           borderRadius: BorderRadius.vertical(
                             top: Radius.circular(size.width * .05),
                           ),
-                          child: CachedNetworkImage(
-                            imageUrl: image,
-                            fit: BoxFit.contain,
+                          child: SizedBox(
+                            height: 150,
+                            child: CachedNetworkImage(
+                              imageUrl: image,
+                              fit: BoxFit.fitHeight,
 
-                            placeholder: (_, __) => const Center(
-                              child: CircularProgressIndicator(),
-                            ),
+                              placeholder: (_, __) => const Center(
+                                child: CircularProgressIndicator(),
+                              ),
 
-                            errorWidget: (_, __, ___) => Icon(
-                              Icons.image_not_supported_outlined,
-                              size: size.width * .10,
+                              errorWidget: (_, __, ___) => Icon(
+                                Icons.image_not_supported_outlined,
+                                size: size.width * .10,
+                              ),
                             ),
                           ),
                         ),
@@ -134,12 +137,13 @@ class ProductCardWidget extends StatelessWidget {
                 ],
               ),
             ),
+            SizedBox(height: size.height * .01),
 
             ///==========================
             /// DETAILS SECTION
             ///==========================
             Expanded(
-              flex: 5,
+              // flex: 4,
               child: Padding(
                 padding: EdgeInsets.symmetric(
                   horizontal: size.width * .02,
@@ -161,7 +165,7 @@ class ProductCardWidget extends StatelessWidget {
                       ),
                     ),
 
-                    SizedBox(height: size.height * .002),
+                    SizedBox(height: size.height * .01),
 
                     Row(
                       children: [
@@ -192,9 +196,9 @@ class ProductCardWidget extends StatelessWidget {
                         ),
                       ],
                     ),
+                    SizedBox(height: size.height * .01),
 
-                    const Spacer(),
-
+                    // const Spacer(),
                     _PriceSection(product: product, onCartTap: onCartTap),
                   ],
                 ),

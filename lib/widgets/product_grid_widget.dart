@@ -38,7 +38,7 @@ class ProductGridWidget extends StatelessWidget {
         // mainAxisSpacing: size.height * .03,
         crossAxisSpacing: 14,
         mainAxisSpacing: 16,
-        mainAxisExtent: 320,
+        mainAxisExtent: 300,
 
         /// Premium Fashion Card
         // childAspectRatio: .65,
