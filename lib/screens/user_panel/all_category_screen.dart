@@ -89,8 +89,6 @@ class _AllCategoryScreenState extends ConsumerState<AllCategoryScreen> {
                     return AllScreenCategoryWidget(
                       categoryModel: filtered[index],
 
-                      productCount: "120+ Products",
-
                       onPress: () {
                         /// Navigate
                       },

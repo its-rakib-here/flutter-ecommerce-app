@@ -18,6 +18,19 @@ class ProductsService {
 
     final snapshot = await query.get();
 
+    // Future<int> getProductsCount(String categoryId) async {
+    //   try {
+    //     final snapshot = await _firestore
+    //         .collection('products')
+    //         .where('categoryId', isEqualTo: categoryId)
+    //         .count()
+    //         .get();
+    //     return snapshot.count ?? 0;
+    //   } catch (e) {
+    //     throw Exception('Failed to load products count: $e');
+    //   }
+    // }
+
     return snapshot.docs.map((doc) => ProductModel.fromFirestore(doc)).toList();
   }
 }

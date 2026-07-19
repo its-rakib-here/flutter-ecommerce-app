@@ -4,6 +4,7 @@ class CategoryModel {
   final String imageUrl;
   final int order;
   final bool isActive;
+  final int productsCount;
 
   const CategoryModel({
     required this.id,
@@ -11,6 +12,7 @@ class CategoryModel {
     required this.imageUrl,
     required this.order,
     required this.isActive,
+    this.productsCount = 0,
   });
 
   factory CategoryModel.fromMap(Map<String, dynamic> map) {
@@ -20,6 +22,7 @@ class CategoryModel {
       imageUrl: map['imageUrl'] ?? '',
       order: map['order'] ?? 0,
       isActive: map['isActive'] ?? true,
+      productsCount: map['productsCount'] ?? 0,
     );
   }
 
@@ -30,6 +33,7 @@ class CategoryModel {
       'imageUrl': imageUrl,
       'order': order,
       'isActive': isActive,
+      'productsCount': productsCount,
     };
   }
 
@@ -39,6 +43,7 @@ class CategoryModel {
     String? imageUrl,
     int? order,
     bool? isActive,
+    int? productsCount,
   }) {
     return CategoryModel(
       id: id ?? this.id,
@@ -46,6 +51,7 @@ class CategoryModel {
       imageUrl: imageUrl ?? this.imageUrl,
       order: order ?? this.order,
       isActive: isActive ?? this.isActive,
+      productsCount: productsCount ?? this.productsCount,
     );
   }
 }

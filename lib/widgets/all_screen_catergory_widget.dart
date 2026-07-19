@@ -5,13 +5,11 @@ import 'package:flutter/material.dart';
 
 class AllScreenCategoryWidget extends StatelessWidget {
   final VoidCallback? onPress;
-  final String productCount;
   final CategoryModel categoryModel;
 
   const AllScreenCategoryWidget({
     super.key,
     this.onPress,
-    required this.productCount,
     required this.categoryModel,
   });
 
@@ -73,7 +71,7 @@ class AllScreenCategoryWidget extends StatelessWidget {
                   const SizedBox(height: 4),
 
                   Text(
-                    productCount,
+                    "${categoryModel.productsCount} Products",
                     style: const TextStyle(
                       fontSize: 13,
                       color: AppConstants.textSecondary,

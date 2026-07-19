@@ -108,7 +108,7 @@ class _LoginInScreenState extends ConsumerState<LoginInScreen> {
                   children: [
                     TextButton(
                       onPressed: () {
-                        Navigator.push(
+                        Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
                             builder: (context) => ForgotPassowrd(),
