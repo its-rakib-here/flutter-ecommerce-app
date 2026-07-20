@@ -5,7 +5,10 @@ import '../models/product_model.dart';
 class ProductsService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  Future<List<ProductModel>> getProducts({String? categoryId}) async {
+  Future<List<ProductModel>> getProducts({
+    String? categoryId,
+    String search = "",
+  }) async {
     Query<Map<String, dynamic>> query = _firestore
         .collection("products")
         .where("isActive", isEqualTo: true);
@@ -18,19 +21,18 @@ class ProductsService {
 
     final snapshot = await query.get();
 
-    // Future<int> getProductsCount(String categoryId) async {
-    //   try {
-    //     final snapshot = await _firestore
-    //         .collection('products')
-    //         .where('categoryId', isEqualTo: categoryId)
-    //         .count()
-    //         .get();
-    //     return snapshot.count ?? 0;
-    //   } catch (e) {
-    //     throw Exception('Failed to load products count: $e');
-    //   }
-    // }
+    List<ProductModel> products = snapshot.docs
+        .map((doc) => ProductModel.fromFirestore(doc))
+        .toList();
 
-    return snapshot.docs.map((doc) => ProductModel.fromFirestore(doc)).toList();
+    if (search.trim().isNotEmpty) {
+      final keyword = search.toLowerCase();
+
+      products = products.where((product) {
+        return product.name.toLowerCase().contains(keyword);
+      }).toList();
+    }
+
+    return products;
   }
 }

@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:e_commerce/controllers/user_controller/home_page_controller/category_controller.dart';
 import 'package:e_commerce/screens/user_panel/category_wise_producsts_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../controllers/user_controller/home_page_controller/all_category_screen_controller.dart';
 import '../../widgets/all_screen_catergory_widget.dart';
 
 class AllCategoryScreen extends ConsumerStatefulWidget {
@@ -14,6 +17,7 @@ class AllCategoryScreen extends ConsumerStatefulWidget {
 
 class _AllCategoryScreenState extends ConsumerState<AllCategoryScreen> {
   final TextEditingController _searchController = TextEditingController();
+  Timer? _debounce;
 
   String searchText = "";
 
@@ -25,8 +29,7 @@ class _AllCategoryScreenState extends ConsumerState<AllCategoryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final categoryAsync = ref.watch(categoryProvider);
-
+    final categoryAsync = ref.watch(allCategoryProvider);
     return Scaffold(
       appBar: AppBar(title: const Text("All Categories"), centerTitle: true),
 
@@ -38,8 +41,10 @@ class _AllCategoryScreenState extends ConsumerState<AllCategoryScreen> {
             child: TextField(
               controller: _searchController,
               onChanged: (value) {
-                setState(() {
-                  searchText = value.toLowerCase();
+                _debounce?.cancel();
+
+                _debounce = Timer(const Duration(milliseconds: 400), () {
+                  ref.read(allCategoryProvider.notifier).searchCategory(value);
                 });
               },
               decoration: InputDecoration(

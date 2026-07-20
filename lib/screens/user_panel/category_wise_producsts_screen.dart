@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -25,6 +27,7 @@ class _CategoryWiseProductsScreenState
     extends ConsumerState<CategoryWiseProductsScreen> {
   TextEditingController _serachText = TextEditingController();
   String search = "";
+  Timer? _debounce;
 
   @override
   void dispose() {
@@ -45,7 +48,7 @@ class _CategoryWiseProductsScreenState
 
   @override
   Widget build(BuildContext context) {
-    final productsAsync = ref.watch(categoryProductsProvider);
+    // final productsAsync = ref.watch(categoryProductsProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -127,6 +130,16 @@ class _CategoryWiseProductsScreenState
           Container(
             padding: const EdgeInsets.all(10),
             child: TextField(
+              onChanged: (value) {
+                if (_debounce?.isActive ?? false) {
+                  _debounce!.cancel();
+                }
+                _debounce = Timer(const Duration(milliseconds: 400), () {
+                  ref
+                      .read(categoryProductsProvider.notifier)
+                      .searchProducts(value);
+                });
+              },
               controller: _serachText,
               decoration: InputDecoration(
                 hintText: "Search items for ${widget.appbarTitle}...",

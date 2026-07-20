@@ -4,19 +4,19 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../models/category_model.dart';
 import '../../../services/categoy_service.dart';
 
-final categoryProvider =
-    AsyncNotifierProvider.autoDispose<CategoryController, List<CategoryModel>>(
-      CategoryController.new,
+final allCategoryProvider =
+    AsyncNotifierProvider<AllCategoryController, List<CategoryModel>>(
+      AllCategoryController.new,
     );
 
-class CategoryController extends AsyncNotifier<List<CategoryModel>> {
+class AllCategoryController extends AsyncNotifier<List<CategoryModel>> {
   final CategoryService _categoryService = CategoryService();
 
   String _search = "";
 
   @override
   Future<List<CategoryModel>> build() async {
-    debugPrint("CategoryController build called");
+    debugPrint("AllCategoryController build called");
 
     return _categoryService.getCategories(search: _search);
   }
@@ -31,7 +31,15 @@ class CategoryController extends AsyncNotifier<List<CategoryModel>> {
 
   Future<void> searchCategory(String query) async {
     _search = query.trim();
+    await loadCategories();
+  }
 
+  Future<void> clearSearch() async {
+    _search = "";
+    await loadCategories();
+  }
+
+  Future<void> refreshCategories() async {
     await loadCategories();
   }
 }

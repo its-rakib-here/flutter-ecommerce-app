@@ -5,7 +5,7 @@ import '../models/category_model.dart';
 class CategoryService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  Future<List<CategoryModel>> getCategories() async {
+  Future<List<CategoryModel>> getCategories({String search = ""}) async {
     try {
       final categorySnapshot = await _firestore
           .collection('categories')
@@ -22,7 +22,6 @@ class CategoryService {
 
       for (final product in productSnapshot.docs) {
         final categoryId = product['categoryId'] as String;
-
         categoryCounts[categoryId] = (categoryCounts[categoryId] ?? 0) + 1;
       }
 
@@ -35,6 +34,15 @@ class CategoryService {
         data['productsCount'] = categoryCounts[doc.id] ?? 0;
 
         categories.add(CategoryModel.fromMap(data));
+      }
+
+      // Search filtering
+      if (search.trim().isNotEmpty) {
+        final keyword = search.toLowerCase();
+
+        categories = categories.where((category) {
+          return category.name.toLowerCase().contains(keyword);
+        }).toList();
       }
 
       return categories;
