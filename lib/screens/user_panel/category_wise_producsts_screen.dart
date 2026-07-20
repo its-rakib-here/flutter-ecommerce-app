@@ -1,5 +1,6 @@
-import 'package:e_commerce/widgets/product_section_widget.dart';
 import 'package:flutter/material.dart';
+
+import '../../widgets/category_products_section_widget.dart';
 
 class CategoryWiseProductsScreen extends StatelessWidget {
   final String appbarTitle;
@@ -122,7 +123,7 @@ class CategoryWiseProductsScreen extends StatelessWidget {
           ),
 
           SizedBox(height: 10),
-          ProductSectionWidget(),
+          const CategoryProductsSectionWidget(),
         ],
       ),
     );
