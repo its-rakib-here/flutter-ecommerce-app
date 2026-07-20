@@ -76,7 +76,7 @@ class CategorySectionWidget extends ConsumerWidget {
                       onTap: () {
                         ref
                             .read(selectedCategoryProvider.notifier)
-                            .toggleCategory(categories[index].id);
+                            .selectCategory(categories[index]);
 
                         debugPrint(
                           "Selected Category: ${categories[index].name} (${categories[index].id})",

@@ -1,8 +1,8 @@
-import 'package:e_commerce/controllers/user_controller/home_page_controller/selected_category_controller.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../models/product_model.dart';
 import '../../../services/products_service.dart';
+import 'selected_category_controller.dart';
 
 final productsServiceProvider = Provider((ref) => ProductsService());
 
@@ -14,22 +14,22 @@ final productsProvider =
 class ProductsController extends AsyncNotifier<List<ProductModel>> {
   @override
   Future<List<ProductModel>> build() async {
-    final categoryId = ref.watch(selectedCategoryProvider);
+    final selectedCategory = ref.watch(selectedCategoryProvider);
 
     return ref
         .read(productsServiceProvider)
-        .getProducts(categoryId: categoryId);
+        .getProducts(categoryId: selectedCategory?.id);
   }
 
   Future<void> refreshProducts() async {
     state = const AsyncLoading();
 
-    final categoryId = ref.read(selectedCategoryProvider);
+    final selectedCategory = ref.read(selectedCategoryProvider);
 
     state = await AsyncValue.guard(() {
       return ref
           .read(productsServiceProvider)
-          .getProducts(categoryId: categoryId);
+          .getProducts(categoryId: selectedCategory?.id);
     });
   }
 }

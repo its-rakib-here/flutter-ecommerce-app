@@ -1,3 +1,5 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:e_commerce/models/category_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -36,26 +38,8 @@ class ProductSectionWidget extends ConsumerWidget {
           Row(
             children: [
               Expanded(
-                child: Text(
-                  _getTitle(selectedCategory),
-                  style: TextStyle(
-                    fontSize: size.width * .05,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                child: _buildHeader(context, selectedCategory, onSeeAll),
               ),
-
-              if (onSeeAll != null)
-                TextButton(
-                  onPressed: onSeeAll,
-                  child: const Text(
-                    "See All",
-                    style: TextStyle(
-                      color: AppConstants.primaryColor,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
             ],
           ),
 
@@ -131,12 +115,72 @@ class ProductSectionWidget extends ConsumerWidget {
     );
   }
 
-  String _getTitle(String? categoryId) {
-    switch (categoryId) {
-      case null:
-        return "🔥 Featured Products";
-      default:
-        return "Products";
-    }
+  Widget _buildHeader(
+    BuildContext context,
+    CategoryModel? category,
+    VoidCallback? onSeeAll,
+  ) {
+    return Row(
+      children: [
+        Expanded(
+          child: category == null
+              ? const Row(
+                  children: [
+                    Icon(Icons.local_fire_department, color: Colors.orange),
+                    SizedBox(width: 6),
+                    Text(
+                      "Featured Products",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                )
+              : Row(
+                  children: [
+                    ClipOval(
+                      child: CachedNetworkImage(
+                        imageUrl: category.imageUrl,
+                        width: 28,
+                        height: 28,
+                        fit: BoxFit.cover,
+                        placeholder: (context, url) => Container(
+                          width: 28,
+                          height: 28,
+                          color: Colors.grey.shade200,
+                        ),
+                        errorWidget: (context, url, error) =>
+                            const Icon(Icons.image_not_supported, size: 18),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Flexible(
+                      child: Text(
+                        category.name,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+        ),
+
+        TextButton(
+          onPressed: onSeeAll,
+          child: const Text(
+            "See All",
+            style: TextStyle(
+              fontSize: 20.0,
+              fontWeight: FontWeight.bold,
+              color: AppConstants.textPrimary,
+            ),
+          ),
+        ),
+      ],
+    );
   }
 }

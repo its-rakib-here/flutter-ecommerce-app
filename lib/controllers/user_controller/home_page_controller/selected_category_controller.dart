@@ -1,27 +1,21 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../models/category_model.dart';
+
 final selectedCategoryProvider =
-    NotifierProvider<SelectedCategoryController, String?>(
+    NotifierProvider<SelectedCategoryController, CategoryModel?>(
       SelectedCategoryController.new,
     );
 
-class SelectedCategoryController extends Notifier<String?> {
+class SelectedCategoryController extends Notifier<CategoryModel?> {
   @override
-  String? build() => null;
+  CategoryModel? build() => null;
 
-  void selectCategory(String categoryId) {
-    state = categoryId;
+  void selectCategory(CategoryModel category) {
+    state = category;
   }
 
   void clearCategory() {
     state = null;
-  }
-
-  void toggleCategory(String categoryId) {
-    if (state == categoryId) {
-      state = null;
-    } else {
-      state = categoryId;
-    }
   }
 }

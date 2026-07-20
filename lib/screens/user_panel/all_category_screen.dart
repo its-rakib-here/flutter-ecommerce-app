@@ -1,4 +1,5 @@
 import 'package:e_commerce/controllers/user_controller/home_page_controller/category_controller.dart';
+import 'package:e_commerce/screens/user_panel/category_wise_producsts_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -90,7 +91,16 @@ class _AllCategoryScreenState extends ConsumerState<AllCategoryScreen> {
                       categoryModel: filtered[index],
 
                       onPress: () {
-                        /// Navigate
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (Context) => CategoryWiseProductsScreen(
+                              appbarTitle: filtered[index].name,
+                              productCount: filtered[index].productsCount,
+                              categoryId: filtered[index].id,
+                            ),
+                          ),
+                        );
                       },
                     );
                   },

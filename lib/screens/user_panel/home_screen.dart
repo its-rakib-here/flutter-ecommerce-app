@@ -28,7 +28,7 @@ class HomeScreen extends ConsumerWidget {
 
             SizedBox(height: size.height * .02),
 
-            const ProductSectionWidget(),
+            ProductSectionWidget(),
           ],
         ),
       ),
