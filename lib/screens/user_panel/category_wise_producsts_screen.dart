@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../controllers/user_controller/home_page_controller/category_products_controller.dart';
 import '../../widgets/category_products_section_widget.dart';
 
-class CategoryWiseProductsScreen extends StatelessWidget {
+class CategoryWiseProductsScreen extends ConsumerStatefulWidget {
   final String appbarTitle;
   final int productCount;
   final String categoryId;
@@ -15,9 +17,35 @@ class CategoryWiseProductsScreen extends StatelessWidget {
   });
 
   @override
+  ConsumerState<CategoryWiseProductsScreen> createState() =>
+      _CategoryWiseProductsScreenState();
+}
+
+class _CategoryWiseProductsScreenState
+    extends ConsumerState<CategoryWiseProductsScreen> {
+  TextEditingController _serachText = TextEditingController();
+  String search = "";
+
+  @override
+  void dispose() {
+    _serachText.dispose();
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    Future.microtask(() {
+      ref
+          .read(categoryProductsProvider.notifier)
+          .loadProducts(widget.categoryId);
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    TextEditingController _serachText = TextEditingController();
-    String search = "";
+    final productsAsync = ref.watch(categoryProductsProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -29,14 +57,14 @@ class CategoryWiseProductsScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              appbarTitle,
+              widget.appbarTitle,
               style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
             ),
 
             const SizedBox(height: 2),
 
             Text(
-              "$productCount Products",
+              "${widget.productCount} Products",
               style: TextStyle(
                 fontSize: 13,
                 color: Colors.grey.shade600,
@@ -101,7 +129,7 @@ class CategoryWiseProductsScreen extends StatelessWidget {
             child: TextField(
               controller: _serachText,
               decoration: InputDecoration(
-                hintText: "Search items for $appbarTitle...",
+                hintText: "Search items for ${widget.appbarTitle}...",
                 prefixIcon: const Icon(Icons.search_rounded),
                 filled: true,
                 fillColor: Colors.grey.shade100,

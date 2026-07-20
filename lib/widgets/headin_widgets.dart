@@ -30,7 +30,7 @@ class HeadinWidgets extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 20.0,
                     fontWeight: FontWeight.bold,
-                    color: Colors.grey.shade800,
+                    color: AppConstants.textPrimary,
                   ),
                 ),
               ],

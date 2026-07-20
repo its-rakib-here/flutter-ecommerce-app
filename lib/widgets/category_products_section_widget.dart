@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../controllers/user_controller/home_page_controller/products_controller.dart';
+import '../controllers/user_controller/home_page_controller/category_products_controller.dart';
 import '../models/product_model.dart';
 import 'product_grid_widget.dart';
 
@@ -21,8 +21,7 @@ class CategoryProductsSectionWidget extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final size = MediaQuery.of(context).size;
 
-    final productsAsync = ref.watch(productsProvider);
-
+    final productsAsync = ref.watch(categoryProductsProvider);
     return Expanded(
       child: productsAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
