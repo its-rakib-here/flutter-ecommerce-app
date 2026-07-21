@@ -144,15 +144,15 @@ class ProductCardWidget extends StatelessWidget {
             /// DETAILS SECTION
             ///==========================
             GestureDetector(
-              // onTap: () {
-              //   Navigator.push(
-              //     context,
-              //     MaterialPageRoute(
-              //       builder: (context) =>
-              //           ProductDetailsScreen(product: product),
-              //     ),
-              //   );
-              // },
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        ProductDetailsScreen(productModel: product),
+                  ),
+                );
+              },
               child: Expanded(
                 // flex: 4,
                 child: Padding(
