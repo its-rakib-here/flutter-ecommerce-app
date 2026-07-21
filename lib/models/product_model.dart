@@ -127,4 +127,14 @@ class ProductModel {
       isFeatured: isFeatured ?? this.isFeatured,
     );
   }
+
+  bool get inStock => stock > 0;
+
+  String get thumbnail => imageUrls.isNotEmpty ? imageUrls.first : "";
+
+  int get discountPercentage {
+    if (price <= 0) return 0;
+
+    return (((price - discountPrice) / price) * 100).round();
+  }
 }

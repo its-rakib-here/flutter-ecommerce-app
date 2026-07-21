@@ -19,97 +19,13 @@ class _MainScreenState extends State<MainScreen> {
   final List<Widget> _pages = const [
     HomeScreen(),
     FavouriteScreen(),
-    Cartscreen(),
+    CartScreen(),
     ProfileScreen(),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        surfaceTintColor: Colors.transparent,
-        elevation: 0,
-
-        title: Row(
-          children: [
-            Container(
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: AppConstants.primaryLight,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              // child: const Icon(
-              //   Icons.shopping_bag_outlined,
-              //   color: AppConstants.primaryColor,
-              // ),
-              child: CircleAvatar(
-                radius: 15,
-                child: ClipOval(
-                  child: Image.asset(
-                    "assets/images/apps_icon.png",
-                    width: 30,
-                    height: 30,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(width: 12),
-
-            const Text(
-              "QuickCart",
-              style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-                color: AppConstants.primaryColor,
-              ),
-            ),
-          ],
-        ),
-
-        actions: [
-          Stack(
-            clipBehavior: Clip.none,
-            children: [
-              IconButton(
-                onPressed: () {
-                  // Navigate to Notification Screen
-                },
-                icon: const Icon(
-                  Icons.notifications_none_rounded,
-                  color: AppConstants.textPrimary,
-                ),
-              ),
-
-              Positioned(
-                right: 8,
-                top: 8,
-                child: Container(
-                  width: 18,
-                  height: 18,
-                  decoration: const BoxDecoration(
-                    color: Colors.red,
-                    shape: BoxShape.circle,
-                  ),
-                  alignment: Alignment.center,
-                  child: const Text(
-                    "2",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 10,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-
-          const SizedBox(width: 8),
-        ],
-      ),
-
       body: _pages[_selectedIndex],
 
       bottomNavigationBar: NavigationBar(

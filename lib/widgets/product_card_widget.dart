@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../models/product_model.dart';
+import '../screens/user_panel/products_details_screen.dart';
 import '../utills/app_constant.dart';
 
 class ProductCardWidget extends StatelessWidget {
@@ -142,65 +143,76 @@ class ProductCardWidget extends StatelessWidget {
             ///==========================
             /// DETAILS SECTION
             ///==========================
-            Expanded(
-              // flex: 4,
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: size.width * .02,
-                  vertical: size.height * .01,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: 40,
-                      child: Text(
-                        product.name,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontSize: size.width * .037,
-                          fontWeight: FontWeight.w600,
+            GestureDetector(
+              // onTap: () {
+              //   Navigator.push(
+              //     context,
+              //     MaterialPageRoute(
+              //       builder: (context) =>
+              //           ProductDetailsScreen(product: product),
+              //     ),
+              //   );
+              // },
+              child: Expanded(
+                // flex: 4,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: size.width * .02,
+                    vertical: size.height * .01,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        height: 40,
+                        child: Text(
+                          product.name,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontSize: size.width * .037,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                       ),
-                    ),
 
-                    SizedBox(height: size.height * .01),
+                      SizedBox(height: size.height * .01),
 
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.star_rounded,
-                          color: Colors.amber,
-                          size: size.width * .042,
-                        ),
-
-                        SizedBox(width: size.width * .02),
-
-                        Text(
-                          product.rating.toStringAsFixed(1),
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: size.width * .031,
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.star_rounded,
+                            color: Colors.amber,
+                            size: size.width * .042,
                           ),
-                        ),
 
-                        SizedBox(width: size.width * .01),
+                          SizedBox(width: size.width * .02),
 
-                        Text(
-                          "(${product.reviewCount})",
-                          style: TextStyle(
-                            color: Colors.grey.shade600,
-                            fontSize: size.width * .028,
+                          Text(
+                            product.rating.toStringAsFixed(1),
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: size.width * .031,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: size.height * .01),
 
-                    // const Spacer(),
-                    _PriceSection(product: product, onCartTap: onCartTap),
-                  ],
+                          SizedBox(width: size.width * .01),
+
+                          Text(
+                            "(${product.reviewCount})",
+                            style: TextStyle(
+                              color: Colors.grey.shade600,
+                              fontSize: size.width * .028,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: size.height * .01),
+
+                      // const Spacer(),
+                      _PriceSection(product: product, onCartTap: onCartTap),
+                    ],
+                  ),
                 ),
               ),
             ),

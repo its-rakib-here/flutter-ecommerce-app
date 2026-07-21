@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
 
-class Cartscreen extends StatefulWidget {
-  const Cartscreen({super.key});
+class CartScreen extends StatelessWidget {
+  const CartScreen({super.key});
 
-  @override
-  State<Cartscreen> createState() => _CartscreenState();
-}
-
-class _CartscreenState extends State<Cartscreen> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    final size = MediaQuery.sizeOf(context);
+
+    /// Later this will come from Riverpod
+    const bool isCartEmpty = false;
+
+    return Scaffold(
+      backgroundColor: const Color(0xffF6F7FB),
+
+      appBar: AppBar(title: Text("Cart")),
+      body: Column(),
+    );
   }
 }

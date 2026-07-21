@@ -5,9 +5,10 @@ import '../../../models/category_model.dart';
 import '../../../services/categoy_service.dart';
 
 final allCategoryProvider =
-    AsyncNotifierProvider<AllCategoryController, List<CategoryModel>>(
-      AllCategoryController.new,
-    );
+    AsyncNotifierProvider.autoDispose<
+      AllCategoryController,
+      List<CategoryModel>
+    >(AllCategoryController.new);
 
 class AllCategoryController extends AsyncNotifier<List<CategoryModel>> {
   final CategoryService _categoryService = CategoryService();
