@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../controllers/user_controller/home_page_controller/cart_controller/cart_controller.dart';
 import '../controllers/user_controller/home_page_controller/favourite_controller/favourite_controller.dart';
 import '../models/product_model.dart';
 import '../screens/user_panel/products_details_screen.dart';
@@ -277,17 +278,21 @@ class _DiscountBadge extends StatelessWidget {
   }
 }
 
-class _PriceSection extends StatelessWidget {
+class _PriceSection extends ConsumerWidget {
   const _PriceSection({required this.product, this.onCartTap});
 
   final ProductModel product;
   final VoidCallback? onCartTap;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final size = MediaQuery.of(context).size;
 
     final hasDiscount = product.discountPrice < product.price;
+
+    final cartItems = ref.watch(cartProvider).value ?? [];
+
+    final isInCart = cartItems.any((item) => item.productId == product.id);
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.end,
@@ -328,24 +333,35 @@ class _PriceSection extends StatelessWidget {
         Material(
           color: Colors.transparent,
           child: InkWell(
-            onTap: onCartTap,
+            onTap: () {
+              if (!isInCart) {
+                onCartTap?.call();
+              }
+            },
             borderRadius: BorderRadius.circular(50),
-            child: Ink(
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 250),
               height: size.width * .105,
               width: size.width * .105,
               decoration: BoxDecoration(
-                color: AppConstants.primaryColor,
+                color: isInCart ? Colors.green : AppConstants.primaryColor,
                 shape: BoxShape.circle,
                 boxShadow: [
                   BoxShadow(
-                    color: AppConstants.primaryColor.withOpacity(.30),
+                    color:
+                        (isInCart
+                                ? AppConstants.primaryColor
+                                : AppConstants.primaryColor)
+                            .withOpacity(.30),
                     blurRadius: 10,
                     offset: const Offset(0, 4),
                   ),
                 ],
               ),
               child: Icon(
-                Icons.add_shopping_cart_rounded,
+                isInCart
+                    ? Icons.check_rounded
+                    : Icons.add_shopping_cart_rounded,
                 color: Colors.white,
                 size: size.width * .045,
               ),

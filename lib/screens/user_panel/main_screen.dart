@@ -2,20 +2,22 @@ import 'package:e_commerce/screens/user_panel/cart_screen.dart';
 import 'package:e_commerce/screens/user_panel/profile_screen.dart';
 import 'package:e_commerce/utills/app_constant.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../controllers/user_controller/home_page_controller/cart_controller/cart_controller.dart';
 import 'favourite_screen.dart';
 import 'home_screen.dart';
 
-class MainScreen extends StatefulWidget {
+class MainScreen extends ConsumerStatefulWidget {
   const MainScreen({super.key});
 
   @override
-  State<MainScreen> createState() => _MainScreenState();
+  ConsumerState<MainScreen> createState() => _MainScreenState();
 }
 
-class _MainScreenState extends State<MainScreen> {
+class _MainScreenState extends ConsumerState<MainScreen> {
   int _selectedIndex = 0;
-  final notificationCount = 5;
+
   final List<Widget> _pages = const [
     HomeScreen(),
     FavouriteScreen(),
@@ -25,6 +27,8 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final cartItems = ref.watch(cartProvider).value ?? [];
+
     return Scaffold(
       body: _pages[_selectedIndex],
 
@@ -44,34 +48,37 @@ class _MainScreenState extends State<MainScreen> {
             selectedIcon: Icon(Icons.home),
             label: "Home",
           ),
+
           const NavigationDestination(
             icon: Icon(Icons.favorite_border),
             selectedIcon: Icon(Icons.favorite),
             label: "Favourite",
           ),
+
           NavigationDestination(
             icon: Stack(
               clipBehavior: Clip.none,
               children: [
                 const Icon(Icons.shopping_cart_outlined),
 
-                Positioned(
-                  right: -6,
-                  top: -4,
-                  child: Container(
-                    padding: const EdgeInsets.all(3),
-                    decoration: const BoxDecoration(
-                      color: Colors.red,
-                      shape: BoxShape.circle,
-                    ),
-                    constraints: const BoxConstraints(
-                      minWidth: 18,
-                      minHeight: 18,
-                    ),
-                    child: const Center(
+                if (cartItems.isNotEmpty)
+                  Positioned(
+                    right: -6,
+                    top: -4,
+                    child: Container(
+                      alignment: Alignment.center,
+                      constraints: const BoxConstraints(
+                        minWidth: 18,
+                        minHeight: 18,
+                      ),
+                      padding: const EdgeInsets.all(3),
+                      decoration: const BoxDecoration(
+                        color: Colors.red,
+                        shape: BoxShape.circle,
+                      ),
                       child: Text(
-                        "2",
-                        style: TextStyle(
+                        "${cartItems.length}",
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 10,
                           fontWeight: FontWeight.bold,
@@ -79,12 +86,43 @@ class _MainScreenState extends State<MainScreen> {
                       ),
                     ),
                   ),
-                ),
               ],
             ),
-            selectedIcon: const Icon(Icons.shopping_cart),
+            selectedIcon: Stack(
+              clipBehavior: Clip.none,
+              children: [
+                const Icon(Icons.shopping_cart),
+
+                if (cartItems.isNotEmpty)
+                  Positioned(
+                    right: -6,
+                    top: -4,
+                    child: Container(
+                      alignment: Alignment.center,
+                      constraints: const BoxConstraints(
+                        minWidth: 18,
+                        minHeight: 18,
+                      ),
+                      padding: const EdgeInsets.all(3),
+                      decoration: const BoxDecoration(
+                        color: Colors.red,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Text(
+                        "${cartItems.length}",
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 10,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+              ],
+            ),
             label: "Cart",
           ),
+
           const NavigationDestination(
             icon: Icon(Icons.person_outline),
             selectedIcon: Icon(Icons.person),
