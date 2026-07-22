@@ -35,4 +35,21 @@ class ProductsService {
 
     return products;
   }
+
+  Future<List<ProductModel>> getRelatedProducts({
+    required String categoryId,
+    required String currentProductId,
+  }) async {
+    final snapshot = await _firestore
+        .collection("products")
+        .where("categoryId", isEqualTo: categoryId)
+        .where("isActive", isEqualTo: true)
+        .limit(10)
+        .get();
+
+    return snapshot.docs
+        .map((doc) => ProductModel.fromFirestore(doc))
+        .where((product) => product.id != currentProductId)
+        .toList();
+  }
 }

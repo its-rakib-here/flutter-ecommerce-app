@@ -5,7 +5,15 @@ import '../../../services/products_service.dart';
 import 'selected_category_controller.dart';
 
 final productsServiceProvider = Provider((ref) => ProductsService());
-
+final relatedProductsProvider =
+    FutureProvider.family<List<ProductModel>, ProductModel>((ref, product) {
+      return ref
+          .read(productsServiceProvider)
+          .getRelatedProducts(
+            categoryId: product.categoryId,
+            currentProductId: product.id,
+          );
+    });
 final productsProvider =
     AsyncNotifierProvider<ProductsController, List<ProductModel>>(
       ProductsController.new,
