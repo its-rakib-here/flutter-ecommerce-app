@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:e_commerce/controllers/user_controller/home_page_controller/favourite_controller/favourite_controller.dart';
 import 'package:e_commerce/models/product_model.dart';
 import 'package:e_commerce/widgets/products_details/product_description_section.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +23,9 @@ class _ProductsHeaderSectionState extends ConsumerState<ProductsHeaderSection> {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     final categoryState = ref.watch(categoryProvider);
+
+    final favourites = ref.watch(favouriteProvider).value ?? {};
+    final isFavourite = favourites.contains(widget.productModel.id);
 
     String categoryName = "Unknown";
 
@@ -57,8 +61,15 @@ class _ProductsHeaderSectionState extends ConsumerState<ProductsHeaderSection> {
                     onTap: () => Navigator.pop(context),
                   ),
                   _buildIconButton(
-                    icon: Icons.favorite_border_rounded,
-                    onTap: () {},
+                    icon: isFavourite
+                        ? Icons.favorite
+                        : Icons.favorite_border_rounded,
+                    iconColor: isFavourite ? Colors.red : Colors.black,
+                    onTap: () async {
+                      await ref
+                          .read(favouriteProvider.notifier)
+                          .toggleFavourite(widget.productModel.id);
+                    },
                   ),
                 ],
               ),
@@ -115,7 +126,11 @@ class _ProductsHeaderSectionState extends ConsumerState<ProductsHeaderSection> {
   }
 }
 
-Widget _buildIconButton({required IconData icon, required VoidCallback onTap}) {
+Widget _buildIconButton({
+  required IconData icon,
+  required VoidCallback onTap,
+  Color iconColor = Colors.black87,
+}) {
   return Material(
     color: Colors.white.withOpacity(0.9),
     shape: const CircleBorder(),
@@ -125,7 +140,7 @@ Widget _buildIconButton({required IconData icon, required VoidCallback onTap}) {
       customBorder: const CircleBorder(),
       child: Padding(
         padding: const EdgeInsets.all(10),
-        child: Icon(icon, color: Colors.black87, size: 24),
+        child: Icon(icon, color: iconColor, size: 24),
       ),
     ),
   );
