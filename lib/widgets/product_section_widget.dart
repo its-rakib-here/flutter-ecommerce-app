@@ -3,6 +3,7 @@ import 'package:e_commerce/models/category_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../controllers/user_controller/home_page_controller/favourite_controller/favourite_controller.dart';
 import '../controllers/user_controller/home_page_controller/products_controller.dart';
 import '../controllers/user_controller/home_page_controller/selected_category_controller.dart';
 import '../models/product_model.dart';
@@ -105,7 +106,11 @@ class ProductSectionWidget extends ConsumerWidget {
               return ProductGridWidget(
                 products: products,
                 onProductTap: onProductTap,
-                onFavouriteTap: onFavouriteTap,
+                onFavouriteTap: (product) {
+                  ref
+                      .read(favouriteProvider.notifier)
+                      .toggleFavourite(product.id);
+                },
                 onCartTap: onCartTap,
               );
             },

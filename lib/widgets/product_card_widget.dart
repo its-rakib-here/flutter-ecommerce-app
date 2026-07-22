@@ -1,11 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../controllers/user_controller/home_page_controller/favourite_controller/favourite_controller.dart';
 import '../models/product_model.dart';
 import '../screens/user_panel/products_details_screen.dart';
 import '../utills/app_constant.dart';
 
-class ProductCardWidget extends StatelessWidget {
+class ProductCardWidget extends ConsumerWidget {
   const ProductCardWidget({
     super.key,
     required this.product,
@@ -24,7 +26,10 @@ class ProductCardWidget extends StatelessWidget {
   final bool isFavourite;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final favourites = ref.watch(favouriteProvider).value ?? {};
+    final isFavourite = favourites.contains(product.id);
+
     final size = MediaQuery.of(context).size;
 
     final image = product.imageUrls.isNotEmpty ? product.imageUrls.first : "";
