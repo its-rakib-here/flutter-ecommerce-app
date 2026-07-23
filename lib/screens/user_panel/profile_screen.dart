@@ -1,4 +1,6 @@
 import 'package:e_commerce/screens/auth_ui/wellcome_screen.dart';
+import 'package:e_commerce/screens/user_panel/checkout/add_address_screen.dart';
+import 'package:e_commerce/screens/user_panel/checkout/my_orders_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -44,7 +46,12 @@ class ProfileScreen extends ConsumerWidget {
               ProfileItem(
                 icon: Icons.shopping_bag_outlined,
                 title: "My Orders",
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => MyOrdersScreen()),
+                  );
+                },
               ),
 
               ProfileItem(
@@ -56,7 +63,12 @@ class ProfileScreen extends ConsumerWidget {
               ProfileItem(
                 icon: Icons.location_on_outlined,
                 title: "Addresses",
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => AddAddressScreen()),
+                  );
+                },
               ),
 
               ProfileItem(
@@ -129,7 +141,7 @@ class ProfileScreen extends ConsumerWidget {
                   Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(builder: (_) => const WellcomeScreen()),
-                        (route) => false,
+                    (route) => false,
                   );
                 }
               },

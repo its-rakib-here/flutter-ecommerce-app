@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../models/address_model.dart';
@@ -14,6 +15,7 @@ final orderProvider = StreamNotifierProvider<OrderNotifier, List<OrderModel>>(
 
 class OrderNotifier extends StreamNotifier<List<OrderModel>> {
   final OrderService _orderService = OrderService.instance;
+  final uid = FirebaseAuth.instance.currentUser!.uid;
 
   @override
   Stream<List<OrderModel>> build() {
@@ -42,7 +44,7 @@ class OrderNotifier extends StreamNotifier<List<OrderModel>> {
 
     final order = OrderModel(
       orderId: '',
-      userId: '',
+      userId: uid,
       items: orderItems,
       address: address,
       subtotal: subtotal,

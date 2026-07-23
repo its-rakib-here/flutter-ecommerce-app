@@ -1,3 +1,4 @@
+import 'package:e_commerce/screens/user_panel/checkout/checkout_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../models/cart_product_model.dart';
@@ -49,7 +50,15 @@ class CartSummary extends StatelessWidget {
                     borderRadius: BorderRadius.circular(14),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          CheckoutScreen(items: items, fromCart: true),
+                    ),
+                  );
+                },
                 child: const Text(
                   "Proceed to Checkout",
                   style: TextStyle(

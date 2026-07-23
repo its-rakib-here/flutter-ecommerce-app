@@ -1,6 +1,7 @@
+import 'package:e_commerce/screens/user_panel/main_screen.dart';
+import 'package:e_commerce/utills/app_constant.dart';
 import 'package:flutter/material.dart';
 
-import '../home_screen.dart';
 import 'my_orders_screen.dart';
 
 class OrderSuccessScreen extends StatelessWidget {
@@ -82,13 +83,17 @@ class OrderSuccessScreen extends StatelessWidget {
                   height: 55,
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.pushReplacement(
+                      Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (_) => const MyOrdersScreen(),
                         ),
                       );
                     },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppConstants.accentColor,
+                      foregroundColor: Colors.white, // Optional
+                    ),
                     child: const Text("View My Orders"),
                   ),
                 ),
@@ -102,10 +107,14 @@ class OrderSuccessScreen extends StatelessWidget {
                     onPressed: () {
                       Navigator.pushAndRemoveUntil(
                         context,
-                        MaterialPageRoute(builder: (_) => const HomeScreen()),
+                        MaterialPageRoute(builder: (_) => const MainScreen()),
                         (route) => false,
                       );
                     },
+                    style: OutlinedButton.styleFrom(
+                      backgroundColor: AppConstants.accentColor,
+                      foregroundColor: Colors.white,
+                    ),
                     child: const Text("Continue Shopping"),
                   ),
                 ),
