@@ -1,3 +1,4 @@
+import 'package:e_commerce/screens/user_panel/checkout/add_address_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -64,6 +65,12 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                   address: _selectedAddress,
                   onTap: () {
                     // Address selection screen later
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => AddAddressScreen(),
+                      ),
+                    );
                   },
                 ),
 

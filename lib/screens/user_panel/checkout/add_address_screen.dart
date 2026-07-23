@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:e_commerce/utills/app_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -119,12 +120,6 @@ class _AddAddressScreenState extends ConsumerState<AddAddressScreen> {
 
             const SizedBox(height: 16),
 
-            TextFormField(
-              controller: _countryController,
-              decoration: inputDecoration("Country"),
-              validator: validator,
-            ),
-
             const SizedBox(height: 16),
 
             TextFormField(
@@ -144,11 +139,6 @@ class _AddAddressScreenState extends ConsumerState<AddAddressScreen> {
 
             const SizedBox(height: 16),
 
-            TextFormField(
-              controller: _postalController,
-              decoration: inputDecoration("Postal Code"),
-            ),
-
             const SizedBox(height: 20),
 
             SwitchListTile(
@@ -165,10 +155,22 @@ class _AddAddressScreenState extends ConsumerState<AddAddressScreen> {
 
             SizedBox(
               height: 55,
+              width: double.infinity,
               child: ElevatedButton(
                 onPressed: isLoading ? null : saveAddress,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppConstants.primaryColor,
+                  // Background color
+                  foregroundColor: Colors.white,
+                  // Text/icon color
+                  disabledBackgroundColor: Colors.grey,
+                  // Optional
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
                 child: isLoading
-                    ? const CircularProgressIndicator()
+                    ? const CircularProgressIndicator(color: Colors.white)
                     : const Text(
                         "Save Address",
                         style: TextStyle(fontSize: 18),

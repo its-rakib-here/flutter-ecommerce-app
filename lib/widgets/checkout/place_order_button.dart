@@ -1,9 +1,10 @@
+import 'package:e_commerce/controllers/user_controller/home_page_controller/checkout_controller/order_controller.dart';
+import 'package:e_commerce/models/address_model.dart';
+import 'package:e_commerce/models/cart_product_model.dart';
+import 'package:e_commerce/screens/user_panel/checkout/order_success_screen.dart';
+import 'package:e_commerce/utills/app_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../../models/address_model.dart';
-import '../../../models/cart_product_model.dart';
-import '../../controllers/user_controller/home_page_controller/checkout_controller/order_controller.dart';
 
 class PlaceOrderButton extends ConsumerStatefulWidget {
   final AddressModel? address;
@@ -48,11 +49,11 @@ class _PlaceOrderButtonState extends ConsumerState<PlaceOrderButton> {
 
       if (!mounted) return;
 
-      // Navigator.pushAndRemoveUntil(
-      //   context,
-      //   MaterialPageRoute(builder: (_) => OrderSuccessScreen(orderId: orderId)),
-      //   (route) => false,
-      // );
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (_) => OrderSuccessScreen(orderId: "125")),
+        (route) => false,
+      );
     } catch (e) {
       if (!mounted) return;
 
@@ -73,6 +74,14 @@ class _PlaceOrderButtonState extends ConsumerState<PlaceOrderButton> {
       height: 55,
       child: ElevatedButton(
         onPressed: _isLoading ? null : _placeOrder,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppConstants.accentColor, // Your background color
+          foregroundColor: Colors.white, // Text color
+          disabledBackgroundColor: Colors.grey,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+        ),
         child: _isLoading
             ? const SizedBox(
                 height: 22,
