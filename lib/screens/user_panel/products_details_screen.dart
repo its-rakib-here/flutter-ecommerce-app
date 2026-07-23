@@ -26,9 +26,7 @@ class ProductDetailsScreen extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: BottomActionBar(
-        onAddToCart: () {
-          // TODO: Add to Cart Logic
-        },
+        onAddToCart: () {},
         onBuyNow: () {
           // TODO: Buy Now Logic
         },

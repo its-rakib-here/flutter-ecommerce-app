@@ -4,6 +4,9 @@ import '../../../models/product_model.dart';
 import '../../../services/products_service.dart';
 import 'selected_category_controller.dart';
 
+final allProductsProvider = FutureProvider<List<ProductModel>>((ref) {
+  return ref.read(productsServiceProvider).getProducts(featuredOnly: false);
+});
 final productsServiceProvider = Provider((ref) => ProductsService());
 final relatedProductsProvider =
     FutureProvider.family<List<ProductModel>, ProductModel>((ref, product) {
@@ -26,7 +29,10 @@ class ProductsController extends AsyncNotifier<List<ProductModel>> {
 
     return ref
         .read(productsServiceProvider)
-        .getProducts(categoryId: selectedCategory?.id);
+        .getProducts(
+          categoryId: selectedCategory?.id,
+          featuredOnly: selectedCategory == null,
+        );
   }
 
   Future<void> refreshProducts() async {
@@ -37,7 +43,10 @@ class ProductsController extends AsyncNotifier<List<ProductModel>> {
     state = await AsyncValue.guard(() {
       return ref
           .read(productsServiceProvider)
-          .getProducts(categoryId: selectedCategory?.id);
+          .getProducts(
+            categoryId: selectedCategory?.id,
+            featuredOnly: selectedCategory == null,
+          );
     });
   }
 }

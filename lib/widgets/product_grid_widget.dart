@@ -10,6 +10,8 @@ class ProductGridWidget extends StatelessWidget {
     this.onProductTap,
     this.onFavouriteTap,
     this.onCartTap,
+    this.shrinkWrap = true,
+    this.physics = const NeverScrollableScrollPhysics(),
   });
 
   final List<ProductModel> products;
@@ -18,41 +20,34 @@ class ProductGridWidget extends StatelessWidget {
   final Function(ProductModel)? onFavouriteTap;
   final Function(ProductModel)? onCartTap;
 
+  final bool shrinkWrap;
+  final ScrollPhysics physics;
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
     return GridView.builder(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
+      shrinkWrap: shrinkWrap,
+      physics: physics,
       padding: EdgeInsets.symmetric(
         horizontal: size.width * .001,
         vertical: size.height * .02,
       ),
       itemCount: products.length,
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-
-        // crossAxisSpacing: size.width * .035,
-        //
-        // mainAxisSpacing: size.height * .03,
         crossAxisSpacing: 14,
         mainAxisSpacing: 16,
         mainAxisExtent: 300,
-
-        /// Premium Fashion Card
-        // childAspectRatio: .65,
       ),
       itemBuilder: (context, index) {
         final product = products[index];
 
         return ProductCardWidget(
           product: product,
-
           onTap: () => onProductTap?.call(product),
-
           onFavouriteTap: () => onFavouriteTap?.call(product),
-
           onCartTap: () => onCartTap?.call(product),
         );
       },

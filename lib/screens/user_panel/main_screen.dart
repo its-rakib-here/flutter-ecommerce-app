@@ -1,3 +1,4 @@
+import 'package:e_commerce/screens/user_panel/all_products_screen.dart';
 import 'package:e_commerce/screens/user_panel/cart_screen.dart';
 import 'package:e_commerce/screens/user_panel/profile_screen.dart';
 import 'package:e_commerce/utills/app_constant.dart';
@@ -20,6 +21,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
 
   final List<Widget> _pages = const [
     HomeScreen(),
+    AllProductsScreen(),
     FavouriteScreen(),
     CartScreen(),
     ProfileScreen(),
@@ -48,7 +50,11 @@ class _MainScreenState extends ConsumerState<MainScreen> {
             selectedIcon: Icon(Icons.home),
             label: "Home",
           ),
-
+          NavigationDestination(
+            icon: const Icon(Icons.inventory_2_outlined),
+            selectedIcon: const Icon(Icons.inventory_2),
+            label: "Products",
+          ),
           const NavigationDestination(
             icon: Icon(Icons.favorite_border),
             selectedIcon: Icon(Icons.favorite),

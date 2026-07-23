@@ -12,7 +12,7 @@ class FavouriteScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final favouriteAsync = ref.watch(favouriteProvider);
-    final productsAsync = ref.watch(productsProvider);
+    final productsAsync = ref.watch(allProductsProvider);
 
     return Scaffold(
       backgroundColor: const Color(0xffF6F7FB),
@@ -63,7 +63,7 @@ class FavouriteScreen extends ConsumerWidget {
 
               return RefreshIndicator(
                 onRefresh: () async {
-                  ref.invalidate(productsProvider);
+                  ref.invalidate(allProductsProvider);
                   ref.invalidate(favouriteProvider);
                 },
                 child: ListView.separated(

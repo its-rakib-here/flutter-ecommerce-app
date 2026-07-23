@@ -8,15 +8,16 @@ class ProductsService {
   Future<List<ProductModel>> getProducts({
     String? categoryId,
     String search = "",
+    bool featuredOnly = false,
   }) async {
     Query<Map<String, dynamic>> query = _firestore
         .collection("products")
         .where("isActive", isEqualTo: true);
 
-    if (categoryId == null) {
-      query = query.where("isFeatured", isEqualTo: true);
-    } else {
+    if (categoryId != null) {
       query = query.where("categoryId", isEqualTo: categoryId);
+    } else if (featuredOnly) {
+      query = query.where("isFeatured", isEqualTo: true);
     }
 
     final snapshot = await query.get();

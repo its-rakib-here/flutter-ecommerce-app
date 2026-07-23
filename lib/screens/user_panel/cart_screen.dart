@@ -14,8 +14,7 @@ class CartScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final cartAsync = ref.watch(cartProvider);
-    final productsAsync = ref.watch(productsProvider);
-
+    final productsAsync = ref.watch(allProductsProvider);
     return Scaffold(
       backgroundColor: const Color(0xffF6F7FB),
 
@@ -112,7 +111,7 @@ class CartScreen extends ConsumerWidget {
                 child: RefreshIndicator(
                   onRefresh: () async {
                     ref.invalidate(cartProvider);
-                    ref.invalidate(productsProvider);
+                    ref.invalidate(allProductsProvider);
                   },
 
                   child: Column(

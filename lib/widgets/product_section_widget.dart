@@ -8,6 +8,7 @@ import '../controllers/user_controller/home_page_controller/favourite_controller
 import '../controllers/user_controller/home_page_controller/products_controller.dart';
 import '../controllers/user_controller/home_page_controller/selected_category_controller.dart';
 import '../models/product_model.dart';
+import '../screens/user_panel/all_products_screen.dart';
 import '../utills/app_constant.dart';
 import 'product_grid_widget.dart';
 
@@ -179,7 +180,12 @@ class ProductSectionWidget extends ConsumerWidget {
         ),
 
         TextButton(
-          onPressed: onSeeAll,
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const AllProductsScreen()),
+            );
+          },
           child: const Text(
             "See All",
             style: TextStyle(
