@@ -15,43 +15,26 @@ class CartScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final cartAsync = ref.watch(cartProvider);
     final productsAsync = ref.watch(allProductsProvider);
+    final selectedMap = ref.watch(cartSelectionProvider);
+
     return Scaffold(
       backgroundColor: const Color(0xffF6F7FB),
-
       appBar: AppBar(
         elevation: 0,
-        centerTitle: false,
         backgroundColor: Colors.white,
         surfaceTintColor: Colors.white,
-        title: cartAsync.when(
-          data: (cartItems) => Column(
-            children: [
-              const Text(
-                "My Cart",
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              // Text(
-              //   "${cartItems.length} Items",
-              //   style: TextStyle(color: Colors.grey.shade600, fontSize: 12),
-              // ),
-            ],
-          ),
-          loading: () => const Text("My Cart"),
-          error: (_, __) => const Text("My Cart"),
+        title: const Text(
+          "My Cart",
+          style: TextStyle(fontWeight: FontWeight.bold),
         ),
       ),
-
       body: productsAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
-
         error: (e, s) => Center(child: Text(e.toString())),
-
         data: (products) {
           return cartAsync.when(
             loading: () => const Center(child: CircularProgressIndicator()),
-
             error: (e, s) => Center(child: Text(e.toString())),
-
             data: (cartItems) {
               if (cartItems.isEmpty) {
                 return Center(
@@ -63,9 +46,7 @@ class CartScreen extends ConsumerWidget {
                         size: 90,
                         color: Colors.grey.shade400,
                       ),
-
                       const SizedBox(height: 20),
-
                       const Text(
                         "Your cart is empty",
                         style: TextStyle(
@@ -73,25 +54,19 @@ class CartScreen extends ConsumerWidget {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-
                       const SizedBox(height: 8),
-
                       Text(
                         "Looks like you haven't\nadded anything yet.",
                         textAlign: TextAlign.center,
                         style: TextStyle(color: Colors.grey.shade600),
                       ),
-
                       const SizedBox(height: 25),
-
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           backgroundColor: AppConstants.primaryColor,
                           foregroundColor: Colors.white,
                         ),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
+                        onPressed: () => Navigator.pop(context),
                         child: const Text("Continue Shopping"),
                       ),
                     ],
@@ -107,13 +82,17 @@ class CartScreen extends ConsumerWidget {
                 return CartProductModel(product: product, cart: cart);
               }).toList();
 
+              /// Only selected items
+              final selectedItems = items.where((item) {
+                return selectedMap[item.product.id] ?? true;
+              }).toList();
+
               return SafeArea(
                 child: RefreshIndicator(
                   onRefresh: () async {
                     ref.invalidate(cartProvider);
                     ref.invalidate(allProductsProvider);
                   },
-
                   child: Column(
                     children: [
                       Expanded(
@@ -122,12 +101,26 @@ class CartScreen extends ConsumerWidget {
                           padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
                           itemCount: items.length,
                           itemBuilder: (context, index) {
-                            return CartItemTile(item: items[index]);
+                            final item = items[index];
+
+                            return CartItemTile(
+                              item: item,
+                              isSelected: selectedMap[item.product.id] ?? true,
+                              onSelectedChanged: (value) {
+                                ref
+                                    .read(cartSelectionProvider.notifier)
+                                    .setSelected(
+                                      item.product.id,
+                                      value ?? false,
+                                    );
+                              },
+                            );
                           },
                         ),
                       ),
 
-                      CartSummary(items: items),
+                      /// Total only selected items
+                      CartSummary(items: selectedItems),
                     ],
                   ),
                 ),

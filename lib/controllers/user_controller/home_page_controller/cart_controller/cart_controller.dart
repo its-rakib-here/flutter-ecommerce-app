@@ -31,3 +31,45 @@ class CartNotifier extends StreamNotifier<List<CartItemModel>> {
     await _service.removeCartItem(productId);
   }
 }
+
+final cartSelectionProvider =
+    NotifierProvider<CartSelectionNotifier, Map<String, bool>>(
+      CartSelectionNotifier.new,
+    );
+
+class CartSelectionNotifier extends Notifier<Map<String, bool>> {
+  @override
+  Map<String, bool> build() {
+    return {};
+  }
+
+  bool isSelected(String productId) {
+    return state[productId] ?? true;
+  }
+
+  void toggle(String productId) {
+    state = {...state, productId: !(state[productId] ?? true)};
+  }
+
+  void setSelected(String productId, bool value) {
+    state = {...state, productId: value};
+  }
+
+  void selectAll(List<String> productIds) {
+    state = {for (final id in productIds) id: true};
+  }
+
+  void unselectAll(List<String> productIds) {
+    state = {for (final id in productIds) id: false};
+  }
+
+  List<String> getSelectedIds() {
+    return state.entries.where((e) => e.value).map((e) => e.key).toList();
+  }
+
+  bool areAllSelected(List<String> productIds) {
+    if (productIds.isEmpty) return false;
+
+    return productIds.every((id) => state[id] ?? true);
+  }
+}
