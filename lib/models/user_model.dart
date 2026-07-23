@@ -51,19 +51,19 @@ class UserModel {
   // Create a UserModel instance from a JSON map
   factory UserModel.fromMap(Map<String, dynamic> json) {
     return UserModel(
-      uId: json['uId'],
-      username: json['username'],
-      email: json['email'],
-      phone: json['phone'],
-      userImg: json['userImg'],
-      userDeviceToken: json['userDeviceToken'],
-      country: json['country'],
-      userAddress: json['userAddress'],
-      street: json['street'],
-      isAdmin: json['isAdmin'],
-      isActive: json['isActive'],
-      createdOn: json['createdOn'].toString(),
-      city: json['city'],
+      uId: json['uId'] ?? '',
+      username: json['username'] ?? '',
+      email: json['email'] ?? '',
+      phone: json['phone'] ?? '',
+      userImg: json['userImg'] ?? '',
+      userDeviceToken: json['userDeviceToken'] ?? '',
+      country: json['country'] ?? '',
+      userAddress: json['userAddress'] ?? '',
+      street: json['street'] ?? '',
+      isAdmin: json['isAdmin'] ?? false,
+      isActive: json['isActive'] ?? false,
+      createdOn: json['createdOn'],
+      city: json['city'] ?? '',
     );
   }
 }

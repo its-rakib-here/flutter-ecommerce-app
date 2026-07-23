@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import '../models/cart_item_model.dart';
+import '../models/user_model.dart';
 
 class FirestoreService {
   FirestoreService._();
@@ -114,5 +115,22 @@ class FirestoreService {
     } else {
       await docRef.update({'quantity': FieldValue.increment(-1)});
     }
+  }
+
+  Stream<UserModel> userStream() {
+    return _firestore.collection("users").doc(_uid).snapshots().map((doc) {
+      if (!doc.exists || doc.data() == null) {
+        throw Exception("User data not found");
+      }
+      return UserModel.fromMap(doc.data()!);
+    });
+  }
+
+  Future<void> updateUser(UserModel user) async {
+    await _firestore.collection("users").doc(user.uId).update(user.toMap());
+  }
+
+  Future<void> logout() async {
+    await _auth.signOut();
   }
 }

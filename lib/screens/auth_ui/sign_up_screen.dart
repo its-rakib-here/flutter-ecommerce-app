@@ -91,7 +91,7 @@ class _SignInScreenState extends ConsumerState<SignUpScreen> {
     return KeyboardVisibilityBuilder(
       builder: (context, isKeyboardVisible) {
         return Scaffold(
-          backgroundColor: AppConstants.backgroundColor,
+          backgroundColor: AppConstants.primaryColor,
           appBar: AppBar(
             backgroundColor: AppConstants.primaryColor,
             title: Text("Sign In "),
