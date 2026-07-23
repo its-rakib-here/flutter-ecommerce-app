@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../controllers/user_controller/home_page_controller/cart_controller/cart_controller.dart';
 import '../../models/cart_product_model.dart';
+import '../../screens/user_panel/products_details_screen.dart';
 import '../../utills/app_constant.dart';
 
 class CartItemTile extends ConsumerWidget {
@@ -31,156 +32,168 @@ class CartItemTile extends ConsumerWidget {
       onDismissed: (_) {
         ref.read(cartProvider.notifier).removeItem(item.product.id);
       },
-      child: Container(
-        margin: const EdgeInsets.only(bottom: 16),
-        padding: const EdgeInsets.all(14),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(18),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(.06),
-              blurRadius: 15,
-              offset: const Offset(0, 6),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(18),
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => ProductDetailsScreen(productModel: item.product),
             ),
-          ],
-        ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Hero(
-              tag: item.product.id,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(14),
-                child: CachedNetworkImage(
-                  imageUrl: item.product.imageUrls.first,
-                  width: 95,
-                  height: 95,
-                  fit: BoxFit.cover,
-                  placeholder: (_, __) => Container(
-                    alignment: Alignment.center,
+          );
+        },
+
+        child: Container(
+          margin: const EdgeInsets.only(bottom: 16),
+          padding: const EdgeInsets.all(14),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(18),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(.06),
+                blurRadius: 15,
+                offset: const Offset(0, 6),
+              ),
+            ],
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Hero(
+                tag: item.product.id,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(14),
+                  child: CachedNetworkImage(
+                    imageUrl: item.product.imageUrls.first,
                     width: 95,
                     height: 95,
-                    child: const CircularProgressIndicator(),
+                    fit: BoxFit.cover,
+                    placeholder: (_, __) => Container(
+                      alignment: Alignment.center,
+                      width: 95,
+                      height: 95,
+                      child: const CircularProgressIndicator(),
+                    ),
+                    errorWidget: (_, __, ___) =>
+                        const Icon(Icons.image_not_supported),
                   ),
-                  errorWidget: (_, __, ___) =>
-                      const Icon(Icons.image_not_supported),
                 ),
               ),
-            ),
 
-            const SizedBox(width: 14),
+              const SizedBox(width: 14),
 
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    item.product.name,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 16,
-                    ),
-                  ),
-
-                  const SizedBox(height: 8),
-
-                  Row(
-                    children: [
-                      Text(
-                        "৳${item.product.discountPrice.toStringAsFixed(0)}",
-                        style: TextStyle(
-                          color: AppConstants.primaryColor,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      item.product.name,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 16,
                       ),
+                    ),
 
-                      if (hasDiscount) ...[
-                        const SizedBox(width: 8),
+                    const SizedBox(height: 8),
+
+                    Row(
+                      children: [
                         Text(
-                          "৳${item.product.price.toStringAsFixed(0)}",
+                          "৳${item.product.discountPrice.toStringAsFixed(0)}",
                           style: TextStyle(
-                            color: Colors.grey.shade600,
-                            decoration: TextDecoration.lineThrough,
+                            color: AppConstants.primaryColor,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
+
+                        if (hasDiscount) ...[
+                          const SizedBox(width: 8),
+                          Text(
+                            "৳${item.product.price.toStringAsFixed(0)}",
+                            style: TextStyle(
+                              color: Colors.grey.shade600,
+                              decoration: TextDecoration.lineThrough,
+                            ),
+                          ),
+                        ],
                       ],
-                    ],
-                  ),
+                    ),
 
-                  const SizedBox(height: 12),
+                    const SizedBox(height: 12),
 
-                  Text(
-                    "Subtotal: ৳${item.subtotal.toStringAsFixed(0)}",
-                    style: const TextStyle(fontWeight: FontWeight.w600),
-                  ),
+                    Text(
+                      "Subtotal: ৳${item.subtotal.toStringAsFixed(0)}",
+                      style: const TextStyle(fontWeight: FontWeight.w600),
+                    ),
 
-                  const SizedBox(height: 14),
+                    const SizedBox(height: 14),
 
-                  Row(
-                    children: [
-                      _QtyButton(
-                        icon: Icons.remove,
-                        onTap: () {
-                          ref
-                              .read(cartProvider.notifier)
-                              .decreaseQuantity(item.product.id);
-                        },
-                      ),
-
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 14),
-                        child: AnimatedSwitcher(
-                          duration: const Duration(milliseconds: 250),
-                          transitionBuilder: (child, animation) {
-                            return ScaleTransition(
-                              scale: animation,
-                              child: child,
-                            );
+                    Row(
+                      children: [
+                        _QtyButton(
+                          icon: Icons.remove,
+                          onTap: () {
+                            ref
+                                .read(cartProvider.notifier)
+                                .decreaseQuantity(item.product.id);
                           },
-                          child: Text(
-                            "${item.cart.quantity}",
-                            key: ValueKey(item.cart.quantity),
-                            style: const TextStyle(
-                              fontSize: 17,
-                              fontWeight: FontWeight.bold,
+                        ),
+
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 14),
+                          child: AnimatedSwitcher(
+                            duration: const Duration(milliseconds: 250),
+                            transitionBuilder: (child, animation) {
+                              return ScaleTransition(
+                                scale: animation,
+                                child: child,
+                              );
+                            },
+                            child: Text(
+                              "${item.cart.quantity}",
+                              key: ValueKey(item.cart.quantity),
+                              style: const TextStyle(
+                                fontSize: 17,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                         ),
-                      ),
 
-                      _QtyButton(
-                        icon: Icons.add,
-                        onTap: () {
-                          ref
-                              .read(cartProvider.notifier)
-                              .increaseQuantity(item.product.id);
-                        },
-                      ),
-
-                      const Spacer(),
-
-                      IconButton(
-                        tooltip: "Remove",
-                        onPressed: () {
-                          ref
-                              .read(cartProvider.notifier)
-                              .removeItem(item.product.id);
-                        },
-                        icon: const Icon(
-                          Icons.delete_outline_rounded,
-                          color: Colors.red,
+                        _QtyButton(
+                          icon: Icons.add,
+                          onTap: () {
+                            ref
+                                .read(cartProvider.notifier)
+                                .increaseQuantity(item.product.id);
+                          },
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+
+                        const Spacer(),
+
+                        IconButton(
+                          tooltip: "Remove",
+                          onPressed: () {
+                            ref
+                                .read(cartProvider.notifier)
+                                .removeItem(item.product.id);
+                          },
+                          icon: const Icon(
+                            Icons.delete_outline_rounded,
+                            color: Colors.red,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

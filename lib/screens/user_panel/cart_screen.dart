@@ -21,7 +21,7 @@ class CartScreen extends ConsumerWidget {
 
       appBar: AppBar(
         elevation: 0,
-        centerTitle: true,
+        centerTitle: false,
         backgroundColor: Colors.white,
         surfaceTintColor: Colors.white,
         title: cartAsync.when(
@@ -31,10 +31,10 @@ class CartScreen extends ConsumerWidget {
                 "My Cart",
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              Text(
-                "${cartItems.length} Items",
-                style: TextStyle(color: Colors.grey.shade600, fontSize: 12),
-              ),
+              // Text(
+              //   "${cartItems.length} Items",
+              //   style: TextStyle(color: Colors.grey.shade600, fontSize: 12),
+              // ),
             ],
           ),
           loading: () => const Text("My Cart"),

@@ -32,10 +32,9 @@ class CartSummary extends StatelessWidget {
 
             const SizedBox(height: 10),
 
-            _row("Delivery", "৳${delivery.toStringAsFixed(0)}"),
-
-            const Divider(height: 28),
-
+            // _row("Delivery", "৳${delivery.toStringAsFixed(0)}"),
+            //
+            // const Divider(height: 28),
             _row("Total", "৳${total.toStringAsFixed(0)}", bold: true),
 
             const SizedBox(height: 18),
