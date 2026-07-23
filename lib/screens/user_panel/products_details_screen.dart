@@ -1,8 +1,12 @@
 import 'package:e_commerce/models/product_model.dart';
+import 'package:e_commerce/screens/user_panel/checkout/checkout_screen.dart';
 import 'package:e_commerce/widgets/products_details/bottom_action_bar.dart';
 import 'package:e_commerce/widgets/products_details/products_header_section.dart';
 import 'package:e_commerce/widgets/products_details/related_products_section.dart';
 import 'package:flutter/material.dart';
+
+import '../../models/cart_item_model.dart';
+import '../../models/cart_product_model.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
   final ProductModel productModel;
@@ -28,7 +32,17 @@ class ProductDetailsScreen extends StatelessWidget {
       bottomNavigationBar: BottomActionBar(
         onAddToCart: () {},
         onBuyNow: () {
-          // TODO: Buy Now Logic
+          final item = CartProductModel(
+            product: productModel,
+            cart: CartItemModel(productId: productModel.id, quantity: 1),
+          );
+
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => CheckoutScreen(items: [item], fromCart: false),
+            ),
+          );
         },
       ),
     );

@@ -91,4 +91,30 @@ class AppConstants {
   // =========================
 
   static const Color shadowColor = Color(0x14000000);
+
+  // Payment Method
+  static const String cashOnDelivery = "Cash On Delivery";
+  static const String sslCommerz = "SSLCommerz";
+
+  // Payment Status
+  static const String paymentPending = "Pending";
+  static const String paymentPaid = "Paid";
+  static const String paymentFailed = "Failed";
+  static const String paymentRefunded = "Refunded";
+
+  // Order Status
+  static const String orderPending = "Pending";
+  static const String orderConfirmed = "Confirmed";
+  static const String orderPacked = "Packed";
+  static const String orderShipped = "Shipped";
+  static const String orderDelivered = "Delivered";
+  static const String orderCancelled = "Cancelled";
+
+  static const List<String> orderFlow = [
+    orderPending,
+    orderConfirmed,
+    orderPacked,
+    orderShipped,
+    orderDelivered,
+  ];
 }

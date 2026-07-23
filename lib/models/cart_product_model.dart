@@ -9,3 +9,4 @@ class CartProductModel {
 
   double get subtotal => product.discountPrice * cart.quantity;
 }
+ 
