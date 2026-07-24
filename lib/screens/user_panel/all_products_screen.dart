@@ -1,9 +1,11 @@
+import 'package:e_commerce/screens/user_panel/product_search_delegate.dart';
 import 'package:e_commerce/screens/user_panel/products_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../controllers/user_controller/home_page_controller/cart_controller/cart_controller.dart';
 import '../../controllers/user_controller/home_page_controller/favourite_controller/favourite_controller.dart';
+import '../../controllers/user_controller/home_page_controller/filter_controller/filtered_products_provider.dart';
 import '../../controllers/user_controller/home_page_controller/products_controller.dart';
 import '../../widgets/product_grid_widget.dart';
 
@@ -13,6 +15,8 @@ class AllProductsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final productsAsync = ref.watch(allProductsProvider);
+    final products = ref.watch(filteredProductsProvider);
+
     return Scaffold(
       backgroundColor: const Color(0xffF7F8FA),
 
@@ -28,15 +32,12 @@ class AllProductsScreen extends ConsumerWidget {
         actions: [
           IconButton(
             onPressed: () {
-              // TODO: Search Screen
+              showSearch(
+                context: context,
+                delegate: ProductSearchDelegate(ref),
+              );
             },
             icon: const Icon(Icons.search),
-          ),
-          IconButton(
-            onPressed: () {
-              // TODO: Filter BottomSheet
-            },
-            icon: const Icon(Icons.tune),
           ),
         ],
       ),

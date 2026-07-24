@@ -7,6 +7,7 @@ import 'selected_category_controller.dart';
 final allProductsProvider = FutureProvider<List<ProductModel>>((ref) {
   return ref.read(productsServiceProvider).getProducts(featuredOnly: false);
 });
+
 final productsServiceProvider = Provider((ref) => ProductsService());
 final relatedProductsProvider =
     FutureProvider.family<List<ProductModel>, ProductModel>((ref, product) {

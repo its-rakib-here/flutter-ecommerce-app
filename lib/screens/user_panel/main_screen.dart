@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../controllers/user_controller/home_page_controller/cart_controller/cart_controller.dart';
+import '../../controllers/user_controller/home_page_controller/favourite_controller/favourite_controller.dart';
 import 'favourite_screen.dart';
 import 'home_screen.dart';
 
@@ -30,7 +31,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
   @override
   Widget build(BuildContext context) {
     final cartItems = ref.watch(cartProvider).value ?? [];
-
+    final favouriteIds = ref.watch(favouriteProvider).value ?? <String>{};
     return Scaffold(
       body: _pages[_selectedIndex],
 
@@ -55,10 +56,72 @@ class _MainScreenState extends ConsumerState<MainScreen> {
             selectedIcon: const Icon(Icons.inventory_2),
             label: "Products",
           ),
-          const NavigationDestination(
-            icon: Icon(Icons.favorite_border),
-            selectedIcon: Icon(Icons.favorite),
-            label: "Favourite",
+          NavigationDestination(
+            icon: Stack(
+              clipBehavior: Clip.none,
+              children: [
+                const Icon(Icons.favorite_border),
+
+                if (favouriteIds.isNotEmpty)
+                  Positioned(
+                    right: -6,
+                    top: -4,
+                    child: Container(
+                      alignment: Alignment.center,
+                      constraints: const BoxConstraints(
+                        minWidth: 18,
+                        minHeight: 18,
+                      ),
+                      padding: const EdgeInsets.all(3),
+                      decoration: const BoxDecoration(
+                        color: Colors.red,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Text(
+                        "${favouriteIds.length}",
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 10,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+            selectedIcon: Stack(
+              clipBehavior: Clip.none,
+              children: [
+                const Icon(Icons.favorite),
+
+                if (favouriteIds.isNotEmpty)
+                  Positioned(
+                    right: -6,
+                    top: -4,
+                    child: Container(
+                      alignment: Alignment.center,
+                      constraints: const BoxConstraints(
+                        minWidth: 18,
+                        minHeight: 18,
+                      ),
+                      padding: const EdgeInsets.all(3),
+                      decoration: const BoxDecoration(
+                        color: Colors.red,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Text(
+                        "${favouriteIds.length}",
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 10,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+            label: "Wishlist",
           ),
 
           NavigationDestination(

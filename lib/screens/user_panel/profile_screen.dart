@@ -1,6 +1,7 @@
 import 'package:e_commerce/screens/auth_ui/wellcome_screen.dart';
-import 'package:e_commerce/screens/user_panel/checkout/add_address_screen.dart';
+import 'package:e_commerce/screens/user_panel/address_screen.dart';
 import 'package:e_commerce/screens/user_panel/checkout/my_orders_screen.dart';
+import 'package:e_commerce/screens/user_panel/favourite_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -15,6 +16,7 @@ class ProfileScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final userAsync = ref.watch(profileProvider);
+
     return Scaffold(
       backgroundColor: const Color(0xffF6F7FB),
 
@@ -57,7 +59,12 @@ class ProfileScreen extends ConsumerWidget {
               ProfileItem(
                 icon: Icons.favorite_border,
                 title: "Wishlist",
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => FavouriteScreen()),
+                  );
+                },
               ),
 
               ProfileItem(
@@ -66,7 +73,7 @@ class ProfileScreen extends ConsumerWidget {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => AddAddressScreen()),
+                    MaterialPageRoute(builder: (context) => AddressScreen()),
                   );
                 },
               ),
@@ -94,12 +101,6 @@ class ProfileScreen extends ConsumerWidget {
                 icon: Icons.language,
                 title: "Language",
                 onTap: () {},
-              ),
-
-              ProfileItem(
-                icon: Icons.dark_mode_outlined,
-                title: "Dark Mode",
-                trailing: Switch(value: false, onChanged: (v) {}),
               ),
             ],
           ),
