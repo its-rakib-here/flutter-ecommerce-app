@@ -1,6 +1,7 @@
 import 'package:e_commerce/screens/auth_ui/wellcome_screen.dart';
 import 'package:e_commerce/screens/user_panel/address_screen.dart';
 import 'package:e_commerce/screens/user_panel/checkout/my_orders_screen.dart';
+import 'package:e_commerce/screens/user_panel/checkout/payment_methods_screen.dart';
 import 'package:e_commerce/screens/user_panel/favourite_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -81,7 +82,14 @@ class ProfileScreen extends ConsumerWidget {
               ProfileItem(
                 icon: Icons.payment_outlined,
                 title: "Payment Methods",
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => PaymentMethodsScreen(),
+                    ),
+                  );
+                },
               ),
             ],
           ),

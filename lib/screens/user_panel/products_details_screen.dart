@@ -4,17 +4,19 @@ import 'package:e_commerce/widgets/products_details/bottom_action_bar.dart';
 import 'package:e_commerce/widgets/products_details/products_header_section.dart';
 import 'package:e_commerce/widgets/products_details/related_products_section.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../controllers/user_controller/home_page_controller/cart_controller/cart_controller.dart';
 import '../../models/cart_item_model.dart';
 import '../../models/cart_product_model.dart';
 
-class ProductDetailsScreen extends StatelessWidget {
+class ProductDetailsScreen extends ConsumerWidget {
   final ProductModel productModel;
 
   const ProductDetailsScreen({super.key, required this.productModel});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -30,7 +32,18 @@ class ProductDetailsScreen extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: BottomActionBar(
-        onAddToCart: () {},
+        onAddToCart: () async {
+          await ref.read(cartProvider.notifier).addToCart(productModel.id);
+
+          if (context.mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text("Product added to cart"),
+                duration: Duration(seconds: 2),
+              ),
+            );
+          }
+        },
         onBuyNow: () {
           final item = CartProductModel(
             product: productModel,
